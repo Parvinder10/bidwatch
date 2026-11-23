@@ -202,5 +202,32 @@ bid/
 
 ---
 
-## 8. Author & Portfolio Notes
-Developed as a showcase of Senior Data Analytics, Analytics Engineering, and Investigative Data Architecture. For questions or reviews, refer to the detailed documentation under [`docs/`](file:///c:/Users/parvk/OneDrive/Desktop/bid/docs/).
+## 8. Live Streamlit Dashboard & Deployment Guide
+
+The BIDWATCH platform includes an interactive, multi-tab Streamlit dashboard engineered for vigilance officers, data journalists, and procurement auditors.
+
+### Launch Locally:
+```bash
+streamlit run app/main.py
+```
+*(Or double-click `run_dashboard.bat` on Windows)*
+
+### Deploy to Streamlit Community Cloud (1-Click Free Hosting):
+1. Navigate to [Streamlit Community Cloud](https://share.streamlit.io/).
+2. Click **"New app"**.
+3. Select your repository: `Parvinder10/bidwatch`.
+4. Branch: `main`.
+5. Main file path: `app/main.py`.
+6. Click **"Deploy!"** — the application will automatically initialize the relational database and start serving live analytics.
+
+### Interactive Dashboard Modules:
+- **📊 1. Executive Overview:** Macro spend metrics, portfolio-level cost escalation (+₹574.4 Cr), cancellation benchmark comparisons, and monthly temporal spending curves.
+- **🏛️ 2. Department Spend:** Departmental budget utilization rankings, total expenditure vs sanctioned capital budget, and average contract sizes.
+- **🏢 3. Supplier Concentration (HHI):** Formal Herfindahl-Hirschman Index market meter with antitrust color bands (Competitive < 1,500, Moderate 1,500–2,500, Oligopoly > 2,500) and cumulative Pareto dominance curves.
+- **🔄 4. Buyer-Supplier Pairs:** Scatter plot audit of repeat wins vs captured departmental spend share (identifying contractors capturing >= 50% of departmental spend).
+- **📈 5. Value Escalations:** Post-award cost growth distributions, delay days, and critical variation tiers (>50% overrun).
+- **❌ 6. Cancellations & Timelines:** Department annulment rates compared to the 11% benchmark, cancellation reasons breakdown, and bidding window duration distributions.
+- **🗺️ 7. Geographic Flow:** Interactive heatmap matrix tracking procurement capital flowing between buyer jurisdictions and vendor headquarter states.
+- **🔍 8. Investigative Leads:** Auditable lead dossiers filterable by severity (HIGH, ELEVATED, MEDIUM) and indicator code, complete with exact JSON fields, rationale, baseline comparisons, and verification SOPs.
+- **🎯 9. Record Drill-Down:** Deep-dive inspector to audit any tender reference number, reviewing notice timelines, participating price bids, award details, and sequential amendment histories.
+- **📑 10. Reports & Exports:** On-demand audit report generator (Executive Briefing, Department Audit, Value Escalation Analysis) with instant Markdown (`.md`), Text (`.txt`), and CSV data exports.

@@ -21,7 +21,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from sqlalchemy import text
 
-from src.ingestion.database import get_engine, query_df
+from src.ingestion.database import get_engine, DEFAULT_DB_PATH
 from src.analytics.queries import (
     get_executive_kpis,
     get_department_spending,
@@ -34,6 +34,20 @@ from src.analytics.queries import (
     get_temporal_trends,
     get_supplier_participation
 )
+from src.analytics.report_generator import (
+    generate_executive_summary_report,
+    generate_department_audit_report
+)
+
+# Self-healing database check for Streamlit Cloud / fresh clone
+if not DEFAULT_DB_PATH.exists():
+    try:
+        from src.ingestion.pipeline import run_pipeline
+        from src.indicators.investigative_engine import run_indicators
+        run_pipeline()
+        run_indicators()
+    except Exception as e:
+        st.error(f"Error initializing database: {e}")
 
 # Page configuration
 st.set_page_config(
@@ -101,7 +115,14 @@ def load_filter_options():
         min_date, max_date = conn.execute(text("SELECT MIN(publication_date), MAX(publication_date) FROM tenders")).fetchone()
     return depts, cats, regions, min_date, max_date
 
+@st.cache_data(ttl=300)
+def load_all_leads():
+    engine = get_engine()
+    with engine.connect() as conn:
+        return pd.read_sql_query(text("SELECT * FROM investigative_leads ORDER BY severity ASC, lead_id ASC"), conn)
+
 depts_list, cats_list, regions_list, min_pub_date, max_pub_date = load_filter_options()
+df_all_leads = load_all_leads()
 
 # -------------------------------------------------------------
 # SIDEBAR FILTERS
@@ -134,7 +155,7 @@ with st.sidebar:
 # -------------------------------------------------------------
 # NAVIGATION TABS
 # -------------------------------------------------------------
-tab_exec, tab_dept, tab_hhi, tab_rel, tab_esc, tab_canc, tab_geo, tab_leads, tab_drill, tab_exports = st.tabs([
+tab_exec, tab_dept, tab_hhi, tab_rel, tab_esc, tab_canc, tab_geo, tab_leads, tab_drill, tab_reports = st.tabs([
     "📊 Executive Overview",
     "🏛️ Department Spend",
     "🏢 Supplier Concentration",
@@ -144,7 +165,7 @@ tab_exec, tab_dept, tab_hhi, tab_rel, tab_esc, tab_canc, tab_geo, tab_leads, tab
     "🗺️ Geographic Flow",
     "🔍 Investigative Leads",
     "🎯 Record Drill-Down",
-    "📥 Data Exports"
+    "📑 Reports & Exports"
 ])
 
 # =============================================================
@@ -179,9 +200,7 @@ with tab_exec:
         
     st.markdown("---")
     
-    # Visualizations row 1
     c1, c2 = st.columns([6, 4])
-    
     with c1:
         st.subheader("Monthly Procurement Expenditure & Contract Trend")
         df_trends = get_temporal_trends()
@@ -280,7 +299,6 @@ with tab_hhi:
     st.markdown('<div class="sub-header">Antitrust Herfindahl-Hirschman Index (HHI) analysis to identify monopolistic and oligopolistic vendor capture.</div>', unsafe_allow_html=True)
     
     h1, h2 = st.columns([5, 5])
-    
     with h1:
         st.subheader("Department Concentration Index (HHI)")
         df_hhi = get_supplier_concentration_hhi()
@@ -488,7 +506,6 @@ with tab_geo:
     
     g1, g2 = st.columns([6, 4])
     with g1:
-        # Pivot table for heatmap
         pivot_geo = df_geo.pivot_table(index="buyer_state", columns="supplier_state", values="value_cr", aggfunc="sum", fill_value=0)
         fig_geo = px.imshow(
             pivot_geo,
@@ -529,10 +546,6 @@ with tab_leads:
     st.markdown('<div class="main-header">Investigative Leads & Anomaly Dossiers</div>', unsafe_allow_html=True)
     st.markdown('<div class="sub-header">Explainable indicators flagged by statistical baselines and procurement compliance rules.</div>', unsafe_allow_html=True)
     
-    engine = get_engine()
-    with engine.connect() as conn:
-        df_all_leads = pd.read_sql_query(text("SELECT * FROM investigative_leads ORDER BY severity ASC, lead_id ASC"), conn)
-        
     lcol1, lcol2, lcol3 = st.columns(3)
     with lcol1:
         sel_ind = st.selectbox("Indicator Type", ["All"] + sorted(df_all_leads["indicator_code"].unique().tolist()))
@@ -551,7 +564,6 @@ with tab_leads:
         
     st.write(f"Showing **{len(filtered_leads)}** investigative leads matching active filters.")
     
-    # Display leads as expandable audit dossiers
     for idx, row in filtered_leads.head(30).iterrows():
         sev_class = "lead-high" if row["severity"] == "HIGH" else ("lead-elevated" if row["severity"] == "ELEVATED" else "lead-medium")
         badge = "🔴 HIGH" if row["severity"] == "HIGH" else ("🟠 ELEVATED" if row["severity"] == "ELEVATED" else "🔵 MEDIUM")
@@ -567,14 +579,11 @@ with tab_leads:
             with c_f1:
                 st.markdown("**1. Supporting Data Fields:**")
                 st.code(json.dumps(json.loads(row['supporting_fields']), indent=2), language="json")
-                
                 st.markdown("**2. Why It Was Flagged (Rationale):**")
                 st.info(row['rationale'])
-                
             with c_f2:
                 st.markdown("**3. Comparison With Baseline:**")
                 st.warning(row['baseline_comparison'])
-                
                 st.markdown("**4. Human Verification Checklist:**")
                 st.markdown(row['human_verification_checklist'])
 
@@ -671,47 +680,90 @@ with tab_drill:
             st.dataframe(amendments_df[["amendment_sequence", "amendment_date", "amendment_type", "value_change_lakhs", "time_extension_days", "justification_code", "description"]], use_container_width=True, hide_index=True)
 
 # =============================================================
-# TAB 10: DATA EXPORTS & REPORTS
+# TAB 10: INVESTIGATIVE REPORTS & EXPORTS
 # =============================================================
-with tab_exports:
-    st.markdown('<div class="main-header">Data Exports & Power BI Integration</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Download clean, relational datasets in CSV format for offline reporting and Power BI dashboards.</div>', unsafe_allow_html=True)
+with tab_reports:
+    st.markdown('<div class="main-header">Investigative Reports & Data Exports</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Generate comprehensive audit dossiers, executive briefings, and export relational data.</div>', unsafe_allow_html=True)
     
-    st.write("All tables are pre-processed and synchronized with `data/processed/powerbi_export/`.")
+    rep_mode = st.radio("Select Operational Mode:", ["📑 Generate & View Audit Reports", "📥 Download Data Tables (CSV)"], horizontal=True)
     
-    ex_col1, ex_col2 = st.columns(2)
-    with ex_col1:
-        st.subheader("Analytical Summary Exports")
-        
-        # 1. Leads
-        csv_leads = df_all_leads.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download Investigative Leads (CSV)", csv_leads, "bidwatch_investigative_leads.csv", "text/csv")
-        
-        # 2. HHI Department Index
-        csv_hhi = get_supplier_concentration_hhi().to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download Supplier Concentration HHI (CSV)", csv_hhi, "bidwatch_hhi_concentration.csv", "text/csv")
-        
-        # 3. Repeat Awards
-        csv_repeat = get_repeat_supplier_awards(min_wins=1).to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download Repeat Awards Summary (CSV)", csv_repeat, "bidwatch_repeat_awards.csv", "text/csv")
-        
-    with ex_col2:
-        st.subheader("Relational Database Tables")
-        engine = get_engine()
-        with engine.connect() as conn:
-            tenders_csv = pd.read_sql_query(text("SELECT * FROM tenders"), conn).to_csv(index=False).encode('utf-8')
-            awards_csv = pd.read_sql_query(text("SELECT * FROM awards"), conn).to_csv(index=False).encode('utf-8')
-            amendments_csv = pd.read_sql_query(text("SELECT * FROM amendments"), conn).to_csv(index=False).encode('utf-8')
+    if rep_mode == "📑 Generate & View Audit Reports":
+        st.markdown("---")
+        rc1, rc2 = st.columns([4, 6])
+        with rc1:
+            report_type = st.selectbox(
+                "Choose Report Template:",
+                [
+                    "Executive Vigilance & Anomaly Summary",
+                    "Department Procurement Integrity Dossier",
+                    "Contract Value Escalation & Cost Overrun Audit"
+                ]
+            )
             
-        st.download_button("📥 Download Clean Tenders Table (CSV)", tenders_csv, "tenders.csv", "text/csv")
-        st.download_button("📥 Download Clean Awards Table (CSV)", awards_csv, "awards.csv", "text/csv")
-        st.download_button("📥 Download Clean Amendments Table (CSV)", amendments_csv, "amendments.csv", "text/csv")
+            if report_type == "Department Procurement Integrity Dossier":
+                target_dept = st.selectbox("Select Target Department:", depts_list)
+            else:
+                target_dept = None
+                
+            st.info("💡 Reports are dynamically synthesized from live SQL aggregations and indicator findings.")
+            
+        with rc2:
+            st.markdown("### Actionable Report Actions")
+            if report_type == "Executive Vigilance & Anomaly Summary":
+                rendered_report = generate_executive_summary_report()
+                report_filename = "bidwatch_executive_vigilance_report.md"
+            elif report_type == "Department Procurement Integrity Dossier":
+                rendered_report = generate_department_audit_report(target_dept or depts_list[0])
+                report_filename = f"bidwatch_audit_{target_dept[:20].lower().replace(' ', '_')}.md"
+            else:
+                df_esc = get_amendment_escalations(min_escalation_pct=25.0)
+                rendered_report = f"# BIDWATCH: Contract Cost Escalation & Overrun Audit\n\nTotal Contracts with >= 25% Cost Escalation: {len(df_esc)}\n\n"
+                rendered_report += df_esc[["tender_reference_no", "department_name", "supplier_name", "initial_value_lakhs", "final_value_lakhs", "escalation_percentage", "total_delay_days"]].to_markdown(index=False)
+                report_filename = "bidwatch_cost_escalation_audit.md"
+                
+            st.download_button(
+                label=f"📥 Download Report as Markdown (.md)",
+                data=rendered_report.encode("utf-8"),
+                file_name=report_filename,
+                mime="text/markdown"
+            )
+            st.download_button(
+                label=f"📥 Download Report as Plain Text (.txt)",
+                data=rendered_report.encode("utf-8"),
+                file_name=report_filename.replace(".md", ".txt"),
+                mime="text/plain"
+            )
+            
+        st.markdown("---")
+        st.markdown("### 📄 Live Report Preview")
+        st.markdown(rendered_report)
         
-    st.markdown("---")
-    st.markdown("### 📊 Power BI Connection Instructions")
-    st.markdown("""
-    To connect Power BI Desktop to BIDWATCH:
-    1. **Method A (Direct SQLite ODBC Connection):** Open Power BI -> Get Data -> ODBC -> select SQLite3 DSN or direct connection string pointing to `data/processed/bidwatch.db`.
-    2. **Method B (CSV Folder Ingestion):** Open Power BI -> Get Data -> Folder -> select the `data/processed/powerbi_export/` directory. All 8 normalized tables will load with predefined foreign keys.
-    3. Refer to [`docs/POWER_BI_GUIDE.md`](file:///c:/Users/parvk/OneDrive/Desktop/bid/docs/POWER_BI_GUIDE.md) for full Star-Schema data model setup, DAX measures, and dashboard layouts.
-    """)
+    else:
+        st.markdown("---")
+        st.markdown("### 📥 Download Clean Relational Datasets")
+        st.write("All tables are pre-processed, entity-resolved, and Power BI compatible.")
+        
+        ex_col1, ex_col2 = st.columns(2)
+        with ex_col1:
+            st.subheader("Investigative & Analytical Tables")
+            csv_leads = df_all_leads.to_csv(index=False).encode('utf-8')
+            st.download_button("📥 Download Investigative Leads (CSV)", csv_leads, "bidwatch_investigative_leads.csv", "text/csv")
+            
+            csv_hhi = get_supplier_concentration_hhi().to_csv(index=False).encode('utf-8')
+            st.download_button("📥 Download Supplier Concentration HHI (CSV)", csv_hhi, "bidwatch_hhi_concentration.csv", "text/csv")
+            
+            csv_repeat = get_repeat_supplier_awards(min_wins=1).to_csv(index=False).encode('utf-8')
+            st.download_button("📥 Download Repeat Awards Summary (CSV)", csv_repeat, "bidwatch_repeat_awards.csv", "text/csv")
+            
+        with ex_col2:
+            st.subheader("Relational Database Tables")
+            engine = get_engine()
+            with engine.connect() as conn:
+                tenders_csv = pd.read_sql_query(text("SELECT * FROM tenders"), conn).to_csv(index=False).encode('utf-8')
+                awards_csv = pd.read_sql_query(text("SELECT * FROM awards"), conn).to_csv(index=False).encode('utf-8')
+                amendments_csv = pd.read_sql_query(text("SELECT * FROM amendments"), conn).to_csv(index=False).encode('utf-8')
+                
+            st.download_button("📥 Download Clean Tenders Table (CSV)", tenders_csv, "tenders.csv", "text/csv")
+            st.download_button("📥 Download Clean Awards Table (CSV)", awards_csv, "awards.csv", "text/csv")
+            st.download_button("📥 Download Clean Amendments Table (CSV)", amendments_csv, "amendments.csv", "text/csv")
