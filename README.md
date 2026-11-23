@@ -1,11 +1,15 @@
 # BIDWATCH 🛡️
 ### Public Procurement Intelligence and Investigative Analytics Platform
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://bidwatch.streamlit.app/)
 [![Python](https://img.shields.io/badge/Python-3.14-blue.svg)](https://www.python.org/)
 [![Database](https://img.shields.io/badge/Database-SQLite%20%7C%20PostgreSQL-003B57.svg)](https://sqlite.org/)
 [![Dashboard](https://img.shields.io/badge/Dashboard-Streamlit-FF4B4B.svg)](https://streamlit.io/)
 [![PowerBI](https://img.shields.io/badge/Integration-Power%20BI-F2C811.svg)](https://powerbi.microsoft.com/)
 [![License](https://img.shields.io/badge/License-CC--BY--4.0-green.svg)](https://creativecommons.org/licenses/by/4.0/)
+
+> 🌐 **Live Interactive Dashboard:** [https://bidwatch.streamlit.app/](https://bidwatch.streamlit.app/)  
+> 📦 **GitHub Repository:** [https://github.com/Parvinder10/bidwatch](https://github.com/Parvinder10/bidwatch)
 
 ---
 
@@ -204,7 +208,12 @@ bid/
 
 ## 8. Live Streamlit Dashboard & Deployment Guide
 
-The BIDWATCH platform includes an interactive, multi-tab Streamlit dashboard engineered for vigilance officers, data journalists, and procurement auditors.
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://bidwatch.streamlit.app/)
+
+The BIDWATCH platform is available as a live interactive web application.
+
+- 🌐 **Live Web Application Link:** [https://bidwatch.streamlit.app/](https://bidwatch.streamlit.app/)
+- 🚀 **1-Click Streamlit Cloud Deploy:** [Deploy App on Streamlit Cloud](https://share.streamlit.io/deploy?repository=Parvinder10/bidwatch&branch=main&mainModule=app/main.py)
 
 ### Launch Locally:
 ```bash
