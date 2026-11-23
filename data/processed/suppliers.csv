@@ -1,0 +1,81 @@
+supplier_id,canonical_name,registration_type,pan_or_cin,state_region,is_msme
+SUP-0001,Apex Infra Projects Ltd,Public Ltd,AAACA1234B,Maharashtra,0
+SUP-0002,Zenith Global Technologies Pvt Ltd,Private Ltd,AABCZ9876C,Karnataka,1
+SUP-0003,Shree Ram Engineering Works,Proprietorship,AASPS5544D,Uttar Pradesh,1
+SUP-0004,Bharat Power Transmission Corp,Public Ltd,AAACB4433E,Delhi,0
+SUP-0005,Universal Medical Systems LLP,LLP,AACCU7788F,Delhi,0
+SUP-0006,Kaveri Water Solutions Pvt Ltd,Private Ltd,AABCK1122G,Tamil Nadu,1
+SUP-0007,Vanguard Security & Logistics Ltd,Public Ltd,AAACV3344H,Delhi,0
+SUP-0008,Himalayan Builders & Associates,Proprietorship,AABPH9988I,Uttarakhand,1
+SUP-0009,Sterling Digital Cloud Solutions Ltd,Public Ltd,AAACS6655J,Karnataka,0
+SUP-0010,Pragati Constructions Consortium,JV,AAACP2211K,Gujarat,0
+SUP-0011,National Health Meditech Pvt Ltd,Private Ltd,AABCN4455L,Uttar Pradesh,1
+SUP-0012,Surya Solar Energy Systems Ltd,Public Ltd,AAACS8899M,Rajasthan,0
+SUP-0013,Delta Marine Infra Co,Private Ltd,AABCD3322N,Gujarat,0
+SUP-0014,Indus Agritech & Storage Corp,Private Ltd,AABCI6677O,Punjab,1
+SUP-0015,Godavari Civil Projects Pvt Ltd,Private Ltd,AABCG5566P,Andhra Pradesh,0
+SUP-0016,Eastern Urban Planners LLP,LLP,AACCE1133Q,Odisha,1
+SUP-0017,Deccan Rail Infra Works Ltd,Public Ltd,AAACD7744R,Telangana,0
+SUP-0018,Royal Facilities Management Services,Private Ltd,AABCR8833S,Delhi,1
+SUP-0019,Pinnacle Consulting Engineers Pvt Ltd,Private Ltd,AABCP9922T,Maharashtra,0
+SUP-0020,Astra Defence Systems Corp,Public Ltd,AAACA4411U,Delhi,0
+SUP-0021,Supplier Partner 021 JV,JV,AAACX0021Z,Gujarat,1
+SUP-0022,Supplier Partner 022 Proprietorship,Proprietorship,AAACX0022Z,Maharashtra,1
+SUP-0023,Supplier Partner 023 JV,JV,AAACX0023Z,Gujarat,0
+SUP-0024,Supplier Partner 024 LLP,LLP,AAACX0024Z,Telangana,1
+SUP-0025,Supplier Partner 025 Public Ltd,Public Ltd,AAACX0025Z,Uttar Pradesh,1
+SUP-0026,Supplier Partner 026 Private Ltd,Private Ltd,AAACX0026Z,Tamil Nadu,0
+SUP-0027,Supplier Partner 027 Public Ltd,Public Ltd,AAACX0027Z,Karnataka,1
+SUP-0028,Supplier Partner 028 JV,JV,AAACX0028Z,Uttar Pradesh,0
+SUP-0029,Supplier Partner 029 Proprietorship,Proprietorship,AAACX0029Z,Uttar Pradesh,1
+SUP-0030,Supplier Partner 030 Public Ltd,Public Ltd,AAACX0030Z,Rajasthan,1
+SUP-0031,Supplier Partner 031 Public Ltd,Public Ltd,AAACX0031Z,Karnataka,1
+SUP-0032,Supplier Partner 032 Proprietorship,Proprietorship,AAACX0032Z,Tamil Nadu,1
+SUP-0033,Supplier Partner 033 Public Ltd,Public Ltd,AAACX0033Z,Karnataka,1
+SUP-0034,Supplier Partner 034 LLP,LLP,AAACX0034Z,Rajasthan,1
+SUP-0035,Supplier Partner 035 Proprietorship,Proprietorship,AAACX0035Z,Gujarat,1
+SUP-0036,Supplier Partner 036 Proprietorship,Proprietorship,AAACX0036Z,Karnataka,1
+SUP-0037,Supplier Partner 037 Proprietorship,Proprietorship,AAACX0037Z,Rajasthan,1
+SUP-0038,Supplier Partner 038 Private Ltd,Private Ltd,AAACX0038Z,Telangana,0
+SUP-0039,Supplier Partner 039 JV,JV,AAACX0039Z,Karnataka,1
+SUP-0040,Supplier Partner 040 Private Ltd,Private Ltd,AAACX0040Z,Uttar Pradesh,1
+SUP-0041,Supplier Partner 041 Private Ltd,Private Ltd,AAACX0041Z,Tamil Nadu,0
+SUP-0042,Supplier Partner 042 Private Ltd,Private Ltd,AAACX0042Z,Rajasthan,0
+SUP-0043,Supplier Partner 043 LLP,LLP,AAACX0043Z,Karnataka,1
+SUP-0044,Supplier Partner 044 Public Ltd,Public Ltd,AAACX0044Z,Rajasthan,1
+SUP-0045,Supplier Partner 045 JV,JV,AAACX0045Z,Telangana,0
+SUP-0046,Supplier Partner 046 Proprietorship,Proprietorship,AAACX0046Z,Madhya Pradesh,1
+SUP-0047,Supplier Partner 047 LLP,LLP,AAACX0047Z,Delhi,1
+SUP-0048,Supplier Partner 048 JV,JV,AAACX0048Z,Maharashtra,0
+SUP-0049,Supplier Partner 049 Private Ltd,Private Ltd,AAACX0049Z,Maharashtra,1
+SUP-0050,Supplier Partner 050 JV,JV,AAACX0050Z,Telangana,0
+SUP-0051,Supplier Partner 051 JV,JV,AAACX0051Z,Odisha,1
+SUP-0052,Supplier Partner 052 Public Ltd,Public Ltd,AAACX0052Z,Delhi,0
+SUP-0053,Supplier Partner 053 JV,JV,AAACX0053Z,Telangana,0
+SUP-0054,Supplier Partner 054 Private Ltd,Private Ltd,AAACX0054Z,Delhi,1
+SUP-0055,Supplier Partner 055 LLP,LLP,AAACX0055Z,Rajasthan,1
+SUP-0056,Supplier Partner 056 Private Ltd,Private Ltd,AAACX0056Z,Maharashtra,1
+SUP-0057,Supplier Partner 057 Proprietorship,Proprietorship,AAACX0057Z,Maharashtra,1
+SUP-0058,Supplier Partner 058 Public Ltd,Public Ltd,AAACX0058Z,Tamil Nadu,1
+SUP-0059,Supplier Partner 059 Private Ltd,Private Ltd,AAACX0059Z,Tamil Nadu,0
+SUP-0060,Supplier Partner 060 LLP,LLP,AAACX0060Z,Telangana,1
+SUP-0061,Supplier Partner 061 Public Ltd,Public Ltd,AAACX0061Z,Rajasthan,0
+SUP-0062,Supplier Partner 062 JV,JV,AAACX0062Z,Uttar Pradesh,0
+SUP-0063,Supplier Partner 063 Private Ltd,Private Ltd,AAACX0063Z,Tamil Nadu,0
+SUP-0064,Supplier Partner 064 Private Ltd,Private Ltd,AAACX0064Z,Maharashtra,1
+SUP-0065,Supplier Partner 065 JV,JV,AAACX0065Z,Telangana,0
+SUP-0066,Supplier Partner 066 LLP,LLP,AAACX0066Z,Gujarat,1
+SUP-0067,Supplier Partner 067 LLP,LLP,AAACX0067Z,Telangana,1
+SUP-0068,Supplier Partner 068 Public Ltd,Public Ltd,AAACX0068Z,Madhya Pradesh,1
+SUP-0069,Supplier Partner 069 LLP,LLP,AAACX0069Z,Maharashtra,1
+SUP-0070,Supplier Partner 070 Public Ltd,Public Ltd,AAACX0070Z,Tamil Nadu,1
+SUP-0071,Supplier Partner 071 LLP,LLP,AAACX0071Z,Rajasthan,1
+SUP-0072,Supplier Partner 072 Proprietorship,Proprietorship,AAACX0072Z,Maharashtra,1
+SUP-0073,Supplier Partner 073 Public Ltd,Public Ltd,AAACX0073Z,Madhya Pradesh,0
+SUP-0074,Supplier Partner 074 Public Ltd,Public Ltd,AAACX0074Z,Delhi,0
+SUP-0075,Supplier Partner 075 Public Ltd,Public Ltd,AAACX0075Z,Uttar Pradesh,0
+SUP-0076,Supplier Partner 076 LLP,LLP,AAACX0076Z,Maharashtra,1
+SUP-0077,Supplier Partner 077 Proprietorship,Proprietorship,AAACX0077Z,Gujarat,1
+SUP-0078,Supplier Partner 078 LLP,LLP,AAACX0078Z,Madhya Pradesh,1
+SUP-0079,Supplier Partner 079 JV,JV,AAACX0079Z,Gujarat,0
+SUP-0080,Supplier Partner 080 Proprietorship,Proprietorship,AAACX0080Z,Madhya Pradesh,1

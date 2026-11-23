@@ -1,0 +1,140 @@
+cancellation_id,tender_id,cancellation_date,reason_category,detailed_reason
+CAN-00001,TEN-00002,2025-08-06,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00002,TEN-00014,2024-04-17,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00003,TEN-00015,2024-06-06,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00004,TEN-00018,2022-11-07,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00005,TEN-00028,2025-10-10,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00006,TEN-00031,2023-07-02,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00007,TEN-00032,2024-03-20,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00008,TEN-00040,2022-12-18,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00009,TEN-00056,2025-10-19,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00010,TEN-00062,2023-03-07,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00011,TEN-00067,2024-07-10,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00012,TEN-00069,2025-04-15,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00013,TEN-00077,2023-11-29,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00014,TEN-00079,2024-08-29,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00015,TEN-00096,2023-03-26,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00016,TEN-00102,2022-07-09,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00017,TEN-00108,2023-02-24,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00018,TEN-00113,2022-12-18,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00019,TEN-00116,2022-08-18,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00020,TEN-00136,2023-07-18,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00021,TEN-00137,2022-07-29,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00022,TEN-00138,2022-08-30,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00023,TEN-00139,2023-05-22,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00024,TEN-00140,2024-02-17,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00025,TEN-00145,2023-05-02,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00026,TEN-00158,2023-05-20,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00027,TEN-00167,2025-03-03,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00028,TEN-00222,2023-09-10,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00029,TEN-00227,2025-02-08,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00030,TEN-00232,2023-03-17,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00031,TEN-00275,2025-04-12,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00032,TEN-00285,2023-08-28,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00033,TEN-00286,2023-01-08,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00034,TEN-00299,2022-05-25,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00035,TEN-00300,2022-04-16,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00036,TEN-00307,2022-06-20,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00037,TEN-00314,2022-11-28,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00038,TEN-00315,2023-12-10,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00039,TEN-00350,2022-06-17,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00040,TEN-00354,2022-03-01,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00041,TEN-00364,2022-06-12,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00042,TEN-00367,2023-07-24,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00043,TEN-00385,2022-10-13,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00044,TEN-00394,2022-12-03,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00045,TEN-00415,2025-12-07,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00046,TEN-00425,2024-04-10,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00047,TEN-00426,2025-01-15,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00048,TEN-00473,2025-11-22,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00049,TEN-00474,2023-02-18,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00050,TEN-00478,2025-03-13,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00051,TEN-00482,2025-10-02,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00052,TEN-00498,2022-03-30,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00053,TEN-00502,2024-06-23,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00054,TEN-00512,2023-05-20,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00055,TEN-00514,2024-02-08,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00056,TEN-00519,2023-10-28,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00057,TEN-00522,2023-12-16,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00058,TEN-00531,2024-06-20,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00059,TEN-00533,2024-03-30,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00060,TEN-00579,2024-11-11,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00061,TEN-00592,2024-02-15,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00062,TEN-00612,2022-06-21,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00063,TEN-00613,2022-09-10,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00064,TEN-00619,2025-09-01,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00065,TEN-00621,2025-07-30,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00066,TEN-00638,2023-06-19,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00067,TEN-00643,2023-04-22,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00068,TEN-00646,2022-02-07,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00069,TEN-00647,2025-10-23,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00070,TEN-00649,2025-09-19,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00071,TEN-00654,2023-11-06,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00072,TEN-00691,2025-02-28,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00073,TEN-00693,2023-02-11,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00074,TEN-00695,2024-02-26,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00075,TEN-00700,2023-10-16,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00076,TEN-00704,2024-10-04,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00077,TEN-00708,2025-05-24,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00078,TEN-00709,2025-08-10,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00079,TEN-00712,2025-10-28,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00080,TEN-00729,2025-08-23,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00081,TEN-00736,2022-04-10,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00082,TEN-00740,2022-02-21,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00083,TEN-00745,2024-10-30,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00084,TEN-00773,2025-06-11,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00085,TEN-00774,2025-05-18,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00086,TEN-00793,2024-07-01,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00087,TEN-00794,2024-02-13,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00088,TEN-00803,2022-10-07,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00089,TEN-00807,2024-08-11,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00090,TEN-00809,2023-12-18,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00091,TEN-00810,2025-05-18,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00092,TEN-00813,2024-12-20,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00093,TEN-00823,2024-11-16,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00094,TEN-00826,2023-10-16,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00095,TEN-00839,2023-06-29,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00096,TEN-00841,2023-04-13,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00097,TEN-00859,2024-07-31,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00098,TEN-00880,2023-12-18,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00099,TEN-00889,2022-11-02,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00100,TEN-00897,2025-05-01,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00101,TEN-00903,2025-06-10,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00102,TEN-00914,2023-12-02,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00103,TEN-00915,2022-04-13,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00104,TEN-00916,2025-09-03,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00105,TEN-00924,2022-05-09,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00106,TEN-00945,2025-03-08,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00107,TEN-00950,2024-04-28,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00108,TEN-00953,2024-09-05,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00109,TEN-00954,2022-03-13,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00110,TEN-00955,2023-03-04,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00111,TEN-00957,2024-10-26,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00112,TEN-00964,2023-02-27,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00113,TEN-00976,2025-06-22,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00114,TEN-00980,2025-02-09,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00115,TEN-00987,2024-04-22,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00116,TEN-00994,2025-02-20,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00117,TEN-01001,2024-12-09,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00118,TEN-01003,2023-01-26,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00119,TEN-01020,2025-10-12,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00120,TEN-01021,2024-08-15,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00121,TEN-01038,2024-02-28,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00122,TEN-01042,2022-08-02,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00123,TEN-01059,2024-09-26,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00124,TEN-01072,2024-09-25,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00125,TEN-01083,2023-11-06,Litigation / Injunction,Tender annulled under section 25(b) due to litigation / injunction.
+CAN-00126,TEN-01096,2022-02-04,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00127,TEN-01107,2025-04-09,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00128,TEN-01123,2025-09-02,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00129,TEN-01129,2024-06-23,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00130,TEN-01133,2022-07-16,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00131,TEN-01137,2022-03-25,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00132,TEN-01141,2022-10-15,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00133,TEN-01148,2022-10-07,Budget Withdrawal,Tender annulled under section 25(b) due to budget withdrawal.
+CAN-00134,TEN-01167,2024-12-27,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.
+CAN-00135,TEN-01212,2024-08-28,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00136,TEN-01213,2025-05-30,Administrative Prerogative,Tender annulled under section 25(b) due to administrative prerogative.
+CAN-00137,TEN-01227,2024-05-31,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00138,TEN-01239,2023-06-21,Technical Disqualification of All,Tender annulled under section 25(b) due to technical disqualification of all.
+CAN-00139,TEN-01243,2023-07-19,Single Bidder Quoted,Tender annulled under section 25(b) due to single bidder quoted.

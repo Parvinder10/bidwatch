@@ -1,0 +1,26 @@
+buyer_id,department_name,ministry,state_region,city,budget_allocation_cr
+BUY-001,Public Works Department - Road Wing,Ministry of Road Transport and Highways,Maharashtra,Mumbai,450.0
+BUY-002,State Highway Development Division,Ministry of Road Transport and Highways,Karnataka,Bengaluru,380.0
+BUY-003,National Highways Project Directorate,Ministry of Road Transport and Highways,Delhi,New Delhi,850.0
+BUY-004,Central Medical Services Society (CMSS),Ministry of Health & Family Welfare,Delhi,New Delhi,600.0
+BUY-005,Directorate of Health Services,Ministry of Health & Family Welfare,Tamil Nadu,Chennai,320.0
+BUY-006,State Medical Supplies Corporation,Ministry of Health & Family Welfare,Uttar Pradesh,Lucknow,410.0
+BUY-007,AIIMS Engineering & Medical Equipment Wing,Ministry of Health & Family Welfare,Delhi,New Delhi,500.0
+BUY-008,School Education Infrastructure Cell,Ministry of Education,Rajasthan,Jaipur,220.0
+BUY-009,Higher Technical Education Council,Ministry of Education,Karnataka,Bengaluru,190.0
+BUY-010,Smart City Mission Special Purpose Vehicle,Ministry of Housing & Urban Affairs,Gujarat,Ahmedabad,480.0
+BUY-011,Metro Rail Corporation Infrastructure Wing,Ministry of Housing & Urban Affairs,Maharashtra,Pune,720.0
+BUY-012,Municipal Corporation Water Supply & Sewerage,Ministry of Housing & Urban Affairs,Telangana,Hyderabad,350.0
+BUY-013,State Electricity Transmission Corporation,Ministry of Power,Maharashtra,Nagpur,540.0
+BUY-014,Renewable Energy Development Agency,Ministry of New & Renewable Energy,Rajasthan,Jodhpur,310.0
+BUY-015,Rural Electrification Board,Ministry of Power,Madhya Pradesh,Bhopal,280.0
+BUY-016,National e-Governance Division (NeGD),Ministry of Electronics & IT,Delhi,New Delhi,390.0
+BUY-017,State Information Technology Promotion Agency,Ministry of Electronics & IT,Karnataka,Bengaluru,250.0
+BUY-018,Drinking Water & Sanitation Mission,Ministry of Jal Shakti,Odisha,Bhubaneswar,360.0
+BUY-019,Major Irrigation Project Directorate,Ministry of Jal Shakti,Andhra Pradesh,Vijayawada,640.0
+BUY-020,Defence Logistics & Heavy Equipment Directorate,Ministry of Defence,Delhi,New Delhi,950.0
+BUY-021,Border Works Engineering Wing,Ministry of Defence,Uttarakhand,Dehradun,580.0
+BUY-022,Police Housing & Infrastructure Corp,Ministry of Home Affairs,Uttar Pradesh,Lucknow,270.0
+BUY-023,State Tourism & Heritage Infrastructure Board,Ministry of Tourism,Rajasthan,Udaipur,140.0
+BUY-024,Agricultural Marketing & Cold Chain Infra,Ministry of Agriculture,Punjab,Chandigarh,210.0
+BUY-025,Port Logistics & Maritime Infrastructure,"Ministry of Ports, Shipping and Waterways",Gujarat,Kandla,420.0
