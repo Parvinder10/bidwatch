@@ -2,13 +2,15 @@
 ### Public Procurement Intelligence and Investigative Analytics Platform
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://bidwatch.streamlit.app/)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Parvinder10/bidwatch)
 [![Python](https://img.shields.io/badge/Python-3.14-blue.svg)](https://www.python.org/)
 [![Database](https://img.shields.io/badge/Database-SQLite%20%7C%20PostgreSQL-003B57.svg)](https://sqlite.org/)
 [![Dashboard](https://img.shields.io/badge/Dashboard-Streamlit-FF4B4B.svg)](https://streamlit.io/)
 [![PowerBI](https://img.shields.io/badge/Integration-Power%20BI-F2C811.svg)](https://powerbi.microsoft.com/)
 [![License](https://img.shields.io/badge/License-CC--BY--4.0-green.svg)](https://creativecommons.org/licenses/by/4.0/)
 
-> 🌐 **Live Interactive Dashboard:** [https://bidwatch.streamlit.app/](https://bidwatch.streamlit.app/)  
+> 🌐 **Live Streamlit Application:** [https://bidwatch.streamlit.app/](https://bidwatch.streamlit.app/)  
+> ⚡ **Live Vercel Edge Portal:** Deployable in 1-click via Vercel ([docs/DASHBOARD_INTERFACE.md](docs/DASHBOARD_INTERFACE.md))  
 > 📦 **GitHub Repository:** [https://github.com/Parvinder10/bidwatch](https://github.com/Parvinder10/bidwatch)
 
 ---
@@ -151,6 +153,7 @@ bid/
 │   ├── SQL_ANALYSIS.md             # Documented analytical SQL queries
 │   ├── ANALYTICAL_METHODOLOGY.md   # Statistical baselines & indicator rules
 │   ├── INVESTIGATION_GUIDE.md      # Field auditor checklist & SOPs
+│   ├── DASHBOARD_INTERFACE.md      # Live Streamlit & Vercel interface documentation
 │   ├── DATA_QUALITY_REPORT.md      # Quality metrics & validation summary
 │   ├── LIMITATIONS.md              # Real-world data & legal boundaries
 │   └── POWER_BI_GUIDE.md           # Star-schema setup, DAX measures, & layout
@@ -206,20 +209,32 @@ bid/
 
 ---
 
-## 8. Live Streamlit Dashboard & Deployment Guide
+## 8. Live Dashboard & Cloud Deployment Guide
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://bidwatch.streamlit.app/)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Parvinder10/bidwatch)
 
-The BIDWATCH platform is available as a live interactive web application.
+BIDWATCH provides a dual live deployment architecture:
 
+### 1. Live Streamlit Analytical Application (Streamlit Cloud)
 - 🌐 **Live Web Application Link:** [https://bidwatch.streamlit.app/](https://bidwatch.streamlit.app/)
 - 🚀 **1-Click Streamlit Cloud Deploy:** [Deploy App on Streamlit Cloud](https://share.streamlit.io/deploy?repository=Parvinder10/bidwatch&branch=main&mainModule=app/main.py)
+- **Local Launch:**
+  ```bash
+  streamlit run app/main.py
+  ```
 
-### Launch Locally:
-```bash
-streamlit run app/main.py
-```
-*(Or double-click `run_dashboard.bat` on Windows)*
+### 2. Live Global Edge Web Interface (Vercel)
+- ⚡ **Deploy to Vercel in 1-Click:** [Deploy to Vercel](https://vercel.com/new/clone?repository-url=https://github.com/Parvinder10/bidwatch)
+- **Vercel Configuration:** Pre-configured with `vercel.json` and a responsive analytics web dashboard in `public/index.html`.
+- **Manual Import Steps on Vercel:**
+  1. Open [vercel.com](https://vercel.com) and log in with your GitHub account (**Parvinder10**).
+  2. Click **"Add New..."** -> **"Project"**.
+  3. Import repository **`Parvinder10/bidwatch`**.
+  4. Framework Preset: **Other** &bull; Root Directory: **`./`**.
+  5. Click **"Deploy"** — live on your personal Vercel domain in under 30 seconds.
+
+For full interface screenshots and walkthrough, refer to [`docs/DASHBOARD_INTERFACE.md`](docs/DASHBOARD_INTERFACE.md).
 
 ### Deploy to Streamlit Community Cloud (1-Click Free Hosting):
 1. Navigate to [Streamlit Community Cloud](https://share.streamlit.io/).
