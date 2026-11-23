@@ -93,24 +93,30 @@ flowchart TD
 
 ---
 
-## 3. Vercel Deployment Guide
+## 3. Vercel Deployment Guide (`parvinder10s-projects`)
 
-The repository includes native Vercel configuration (`vercel.json`) and a dedicated responsive web interface in `public/index.html`.
+The repository includes native Vercel configuration (`vercel.json`) and a dedicated responsive web interface in `index.html` and `public/index.html`.
 
-### Method A: 1-Click Import via Vercel Dashboard (Recommended)
-1. Log in to [Vercel](https://vercel.com/) with your GitHub account (**Parvinder10**).
-2. Click **"Add New..."** -> **"Project"**.
-3. Under *Import Git Repository*, find or search for **`Parvinder10/bidwatch`**.
-4. Click **"Import"**.
-5. Leave the default settings (Framework Preset: **Other**, Root Directory: **`./`**).
-6. Click **"Deploy"**.
-7. Vercel will instantly build and deploy your live edge portal at `https://bidwatch.vercel.app` (or custom Vercel subdomain).
+- **Target Vercel Account:** [https://vercel.com/parvinder10s-projects](https://vercel.com/parvinder10s-projects)
+- **1-Click Direct Import Link:** [Deploy to Vercel (parvinder10s-projects)](https://vercel.com/new/clone?repository-url=https://github.com/Parvinder10/bidwatch&project-name=bidwatch)
+- **Deployed Edge Portal:** `https://bidwatch.vercel.app` (or `https://bidwatch-parvinder10s-projects.vercel.app`)
 
-### Method B: Deploy via Vercel CLI
-```bash
-# In the project directory:
-vercel --prod
-```
+### Step-by-Step Vercel Deployment:
+1. Open your Vercel Dashboard at [https://vercel.com/parvinder10s-projects](https://vercel.com/parvinder10s-projects).
+2. Click **"Add New..."** $\rightarrow$ **"Project"**.
+3. Under *Import Git Repository*, locate **`Parvinder10/bidwatch`** and click **"Import"**.
+4. Configure Project:
+   - **Project Name:** `bidwatch`
+   - **Framework Preset:** `Other` (Static HTML / JS Edge)
+   - **Root Directory:** `./`
+5. Click **"Deploy"**.
+6. Within 15 seconds, Vercel deploys the global edge dashboard interface.
+
+### Live Edge Portal Features:
+- **Macro KPI HUD:** Displays active totals across 1,250 tenders, 1,133 awards, ₹8,241 Cr spend, +₹574.4 Cr escalation, and 9.36% cancellation rates.
+- **Dynamic Charts:** Chart.js visualizations for Department HHI concentration scores and Category spending splits.
+- **Priority Leads Matrix:** Filtered sample radar displaying High and Elevated audit leads.
+- **Cross-Platform Links:** Direct links to the GitHub codebase, full documentation suite, and live Streamlit analytical application.
 
 ---
 

@@ -225,24 +225,18 @@ BIDWATCH provides a dual live deployment architecture:
   ```
 
 ### 2. Live Global Edge Web Interface (Vercel)
-- ⚡ **Deploy to Vercel in 1-Click:** [Deploy to Vercel](https://vercel.com/new/clone?repository-url=https://github.com/Parvinder10/bidwatch)
-- **Vercel Configuration:** Pre-configured with `vercel.json` and a responsive analytics web dashboard in `public/index.html`.
+- ⚡ **Deploy to Vercel in 1-Click:** [Deploy to Vercel (parvinder10s-projects)](https://vercel.com/new/clone?repository-url=https://github.com/Parvinder10/bidwatch&project-name=bidwatch)
+- 🏢 **Target Vercel Account:** [https://vercel.com/parvinder10s-projects](https://vercel.com/parvinder10s-projects)
+- 🔗 **Direct Project Dashboard:** `https://vercel.com/parvinder10s-projects/bidwatch`
+- **Vercel Configuration:** Pre-configured with `vercel.json` and responsive analytics web dashboards in `index.html` and `public/index.html`.
 - **Manual Import Steps on Vercel:**
-  1. Open [vercel.com](https://vercel.com) and log in with your GitHub account (**Parvinder10**).
+  1. Open your Vercel Dashboard at [https://vercel.com/parvinder10s-projects](https://vercel.com/parvinder10s-projects).
   2. Click **"Add New..."** -> **"Project"**.
   3. Import repository **`Parvinder10/bidwatch`**.
   4. Framework Preset: **Other** &bull; Root Directory: **`./`**.
   5. Click **"Deploy"** — live on your personal Vercel domain in under 30 seconds.
 
 For full interface screenshots and walkthrough, refer to [`docs/DASHBOARD_INTERFACE.md`](docs/DASHBOARD_INTERFACE.md).
-
-### Deploy to Streamlit Community Cloud (1-Click Free Hosting):
-1. Navigate to [Streamlit Community Cloud](https://share.streamlit.io/).
-2. Click **"New app"**.
-3. Select your repository: `Parvinder10/bidwatch`.
-4. Branch: `main`.
-5. Main file path: `app/main.py`.
-6. Click **"Deploy!"** — the application will automatically initialize the relational database and start serving live analytics.
 
 ### Interactive Dashboard Modules:
 - **📊 1. Executive Overview:** Macro spend metrics, portfolio-level cost escalation (+₹574.4 Cr), cancellation benchmark comparisons, and monthly temporal spending curves.
