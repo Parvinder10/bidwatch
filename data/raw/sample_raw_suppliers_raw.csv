@@ -1,1 +1,26 @@
-
+raw_name,resolved_supplier_id,confidence_score,match_method,matching_evidence
+Vanguard Security & Logistics Ltd,SUP-0007,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACV3344H). Canonical: 'Vanguard Security & Logistics Ltd'.
+Supplier Partner 076 L.L.P.,SUP-0076,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0076Z). Canonical: 'Supplier Partner 076 LLP'.
+Supplier Partner 045 JV,SUP-0045,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0045Z). Canonical: 'Supplier Partner 045 JV'.
+Supplier Partner 058 Public Ltd,SUP-0058,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0058Z). Canonical: 'Supplier Partner 058 Public Ltd'.
+Supplier Partner 044 Public Ltd,SUP-0044,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0044Z). Canonical: 'Supplier Partner 044 Public Ltd'.
+Supplier Partner 068 Public Limited,SUP-0068,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0068Z). Canonical: 'Supplier Partner 068 Public Ltd'.
+Pragati Construction Consortium,SUP-0010,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACP2211K). Canonical: 'Pragati Construction Consortium'.
+Pinnacle Consulting Engineers pvt ltd,SUP-0019,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AABCP9922T). Canonical: 'Pinnacle Consulting Engineers Pvt Ltd'.
+Supplier Partner 062 JV,SUP-0062,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0062Z). Canonical: 'Supplier Partner 062 JV'.
+Universal Medical Systems LLP,SUP-0005,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AACCU7788F). Canonical: 'Universal Medical Systems LLP'.
+Indus Agritech & Storage Corp,SUP-0014,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AABCI6677O). Canonical: 'Indus Agritech & Storage Corp'.
+Supplier Partner 040 Private Limited,SUP-0040,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0040Z). Canonical: 'Supplier Partner 040 Private Ltd'.
+Supplier Partner 038 Private Ltd,SUP-0038,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0038Z). Canonical: 'Supplier Partner 038 Private Ltd'.
+Supplier Partner 032 Proprietorship,SUP-0032,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0032Z). Canonical: 'Supplier Partner 032 Proprietorship'.
+Supplier Partner 023 JV,SUP-0023,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0023Z). Canonical: 'Supplier Partner 023 JV'.
+Supplier Partner 048 JV,SUP-0048,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0048Z). Canonical: 'Supplier Partner 048 JV'.
+Supplier Partner 063 Private Limited,SUP-0063,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0063Z). Canonical: 'Supplier Partner 063 Private Ltd'.
+Supplier Partner 039 JV,SUP-0039,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0039Z). Canonical: 'Supplier Partner 039 JV'.
+Supplier Partner 030 Public ltd.,SUP-0030,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0030Z). Canonical: 'Supplier Partner 030 Public Ltd'.
+Supplier Partner 055 LLP,SUP-0055,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0055Z). Canonical: 'Supplier Partner 055 LLP'.
+Supplier Partner 069 LLP,SUP-0069,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0069Z). Canonical: 'Supplier Partner 069 LLP'.
+Kaveri Water Solutions Private Limited,SUP-0006,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AABCK1122G). Canonical: 'Kaveri Water Solutions Pvt Ltd'.
+Indus Agritech & Storage Corp,SUP-0014,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AABCI6677O). Canonical: 'Indus Agritech & Storage Corp'.
+Zenith Global Technologies Pvt Ltd,SUP-0002,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AABCZ9876C). Canonical: 'Zenith Global Technologies Pvt Ltd'.
+Supplier Partner 023 JV,SUP-0023,1.0,EXACT_IDENTIFIER,Exact tax/corporate registration identifier match (AAACX0023Z). Canonical: 'Supplier Partner 023 JV'.

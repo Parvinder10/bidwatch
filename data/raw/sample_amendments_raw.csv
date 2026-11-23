@@ -1,26 +1,26 @@
 amendment_id,award_id,amendment_sequence,amendment_date,amendment_type,value_change_inr,time_extension_days,justification_code,description
-AMD-00001,AWD-00001,1,2024-01-08,Value Escalation,236282.43,79,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00002,AWD-00003,1,2022-10-31,Value Escalation,5362924.29,0,Design Scope Change,Amendment #1 approved due to design scope change requirement.
-AMD-00003,AWD-00003,2,2023-01-22,Value Escalation,3863864.34,54,Emergency Works,Amendment #2 approved due to emergency works requirement.
-AMD-00004,AWD-00003,3,2023-04-08,Value Escalation,3584402.29,45,Emergency Works,Amendment #3 approved due to emergency works requirement.
-AMD-00005,AWD-00007,1,2023-12-16,Value Escalation,439304.35,67,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00006,AWD-00008,1,2023-04-19,Value Escalation,3342659.73,0,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00007,AWD-00011,1,2023-04-01,Value Escalation,14935150.83,41,Design Scope Change,Amendment #1 approved due to design scope change requirement.
-AMD-00008,AWD-00011,2,2023-05-11,Value Escalation,20281640.45,48,Design Scope Change,Amendment #2 approved due to design scope change requirement.
-AMD-00009,AWD-00011,3,2023-06-29,Value Escalation,13674596.87,39,Emergency Works,Amendment #3 approved due to emergency works requirement.
-AMD-00010,AWD-00012,1,2023-04-27,Value Escalation,476366.47,87,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00011,AWD-00016,1,2022-12-04,Value Escalation,697401.7,64,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00012,AWD-00018,1,2025-04-08,Value Escalation,10322361.64,56,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00013,AWD-00021,1,2022-09-28,Value Escalation,73136.36,0,Design Scope Change,Amendment #1 approved due to design scope change requirement.
-AMD-00014,AWD-00021,2,2022-11-28,Value Escalation,78319.14,74,Design Scope Change,Amendment #2 approved due to design scope change requirement.
-AMD-00015,AWD-00021,3,2023-03-31,Value Escalation,84577.45,0,Design Scope Change,Amendment #3 approved due to design scope change requirement.
-AMD-00016,AWD-00021,4,2023-02-07,Value Escalation,56687.34,0,Emergency Works,Amendment #4 approved due to emergency works requirement.
-AMD-00017,AWD-00022,1,2025-02-16,Value Escalation,2247358.52,0,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00018,AWD-00024,1,2023-03-02,Value Escalation,770048.29,77,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00019,AWD-00025,1,2024-11-14,Value Escalation,16119151.26,0,Emergency Works,Amendment #1 approved due to emergency works requirement.
-AMD-00020,AWD-00025,2,2025-01-30,Value Escalation,15451183.81,0,Price Index Adjustment,Amendment #2 approved due to price index adjustment requirement.
-AMD-00021,AWD-00026,1,2026-01-23,Value Escalation,2046444.21,0,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00022,AWD-00028,1,2025-11-12,Value Escalation,493320.74,67,Design Scope Change,Amendment #1 approved due to design scope change requirement.
-AMD-00023,AWD-00028,2,2026-02-15,Value Escalation,378840.3,0,Design Scope Change,Amendment #2 approved due to design scope change requirement.
-AMD-00024,AWD-00029,1,2023-08-29,Value Escalation,380152.99,48,Administrative,Amendment #1 approved due to administrative requirement.
-AMD-00025,AWD-00030,1,2025-03-25,Value Escalation,1902235.91,0,Price Index Adjustment,Amendment #1 approved due to price index adjustment requirement.
+AMD-00001,AWD-00003,1,2022-06-10,Value Escalation,2394392.91,54,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00002,AWD-00006,1,2025-06-29,Value Escalation,1103753.94,0,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00003,AWD-00007,1,2022-07-01,Value Escalation,3165203.09,79,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00004,AWD-00009,1,2022-03-21,Value Escalation,424250.43,48,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00005,AWD-00011,1,2023-03-04,Value Escalation,454767.52,0,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00006,AWD-00012,1,2025-01-29,Value Escalation,719348.32,37,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00007,AWD-00013,1,2025-11-06,Value Escalation,5235233.89,69,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00008,AWD-00017,1,2023-12-15,Value Escalation,1097233.89,67,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00009,AWD-00020,1,2025-10-23,Value Escalation,52139708.55,0,Emergency Works,Amendment #1 approved due to emergency works requirement.
+AMD-00010,AWD-00020,2,2025-11-07,Value Escalation,56293458.23,0,Price Index Adjustment,Amendment #2 approved due to price index adjustment requirement.
+AMD-00011,AWD-00020,3,2026-02-03,Value Escalation,28115292.11,0,Price Index Adjustment,Amendment #3 approved due to price index adjustment requirement.
+AMD-00012,AWD-00023,1,2023-08-15,Value Escalation,2849827.44,0,Emergency Works,Amendment #1 approved due to emergency works requirement.
+AMD-00013,AWD-00023,2,2023-11-18,Value Escalation,4194594.83,50,Price Index Adjustment,Amendment #2 approved due to price index adjustment requirement.
+AMD-00014,AWD-00023,3,2023-10-21,Value Escalation,3003474.92,0,Emergency Works,Amendment #3 approved due to emergency works requirement.
+AMD-00015,AWD-00024,1,2024-09-21,Value Escalation,1278674.47,73,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00016,AWD-00029,1,2025-03-04,Value Escalation,14596451.24,0,Design Scope Change,Amendment #1 approved due to design scope change requirement.
+AMD-00017,AWD-00029,2,2025-05-01,Value Escalation,19748178.54,36,Emergency Works,Amendment #2 approved due to emergency works requirement.
+AMD-00018,AWD-00032,1,2025-10-17,Value Escalation,763889.34,0,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00019,AWD-00038,1,2023-12-17,Value Escalation,1180813.11,0,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00020,AWD-00039,1,2025-01-04,Value Escalation,6643990.17,52,Design Scope Change,Amendment #1 approved due to design scope change requirement.
+AMD-00021,AWD-00039,2,2025-02-04,Value Escalation,6773062.57,38,Emergency Works,Amendment #2 approved due to emergency works requirement.
+AMD-00022,AWD-00041,1,2023-09-26,Value Escalation,12716394.47,0,Design Scope Change,Amendment #1 approved due to design scope change requirement.
+AMD-00023,AWD-00041,2,2023-10-21,Value Escalation,9393567.23,57,Design Scope Change,Amendment #2 approved due to design scope change requirement.
+AMD-00024,AWD-00045,1,2025-04-26,Value Escalation,1173696.2,65,Administrative,Amendment #1 approved due to administrative requirement.
+AMD-00025,AWD-00046,1,2026-01-29,Value Escalation,12974156.74,85,Emergency Works,Amendment #1 approved due to emergency works requirement.

@@ -1,5 +1,5 @@
 supplier_id,canonical_name,registration_type,pan_or_cin,state_region,is_msme
-SUP-0001,Apex Infra Projects Ltd,Public Ltd,AAACA1234B,Maharashtra,0
+SUP-0001,Apex Infrastructure Projects Ltd,Public Ltd,AAACA1234B,Maharashtra,0
 SUP-0002,Zenith Global Technologies Pvt Ltd,Private Ltd,AABCZ9876C,Karnataka,1
 SUP-0003,Shree Ram Engineering Works,Proprietorship,AASPS5544D,Uttar Pradesh,1
 SUP-0004,Bharat Power Transmission Corp,Public Ltd,AAACB4433E,Delhi,0
@@ -8,10 +8,10 @@ SUP-0006,Kaveri Water Solutions Pvt Ltd,Private Ltd,AABCK1122G,Tamil Nadu,1
 SUP-0007,Vanguard Security & Logistics Ltd,Public Ltd,AAACV3344H,Delhi,0
 SUP-0008,Himalayan Builders & Associates,Proprietorship,AABPH9988I,Uttarakhand,1
 SUP-0009,Sterling Digital Cloud Solutions Ltd,Public Ltd,AAACS6655J,Karnataka,0
-SUP-0010,Pragati Constructions Consortium,JV,AAACP2211K,Gujarat,0
+SUP-0010,Pragati Construction Consortium,JV,AAACP2211K,Gujarat,0
 SUP-0011,National Health Meditech Pvt Ltd,Private Ltd,AABCN4455L,Uttar Pradesh,1
 SUP-0012,Surya Solar Energy Systems Ltd,Public Ltd,AAACS8899M,Rajasthan,0
-SUP-0013,Delta Marine Infra Co,Private Ltd,AABCD3322N,Gujarat,0
+SUP-0013,Delta Marine Infrastructure Co,Private Ltd,AABCD3322N,Gujarat,0
 SUP-0014,Indus Agritech & Storage Corp,Private Ltd,AABCI6677O,Punjab,1
 SUP-0015,Godavari Civil Projects Pvt Ltd,Private Ltd,AABCG5566P,Andhra Pradesh,0
 SUP-0016,Eastern Urban Planners LLP,LLP,AACCE1133Q,Odisha,1

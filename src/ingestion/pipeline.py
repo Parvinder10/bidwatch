@@ -167,6 +167,16 @@ def generate_benchmark_procurement_data(seed: int = 42) -> Tuple[
     # BUY-016 (NeGD IT) has repeat favorite: SUP-0002 (Zenith Global Technologies)
     # BUY-020 (Defence) has repeat favorite: SUP-0020 (Astra Defence Systems Corp)
 
+    def make_noisy_name(canonical: str) -> str:
+        if random.random() < 0.35:
+            if "Pvt Ltd" in canonical:
+                return canonical.replace("Pvt Ltd", random.choice(["Private Limited", "pvt ltd", "P. Ltd.", "PVT. LTD."]))
+            elif "Ltd" in canonical:
+                return canonical.replace("Ltd", random.choice(["Limited", "LTD", "ltd."]))
+            elif "LLP" in canonical:
+                return canonical.replace("LLP", "L.L.P.")
+        return canonical
+
     for t_idx in range(1, total_tenders + 1):
         tender_id = f"TEN-{t_idx:05d}"
         
@@ -291,11 +301,15 @@ def generate_benchmark_procurement_data(seed: int = 42) -> Tuple[
         winning_discount = random.uniform(0.92, 0.99) # 1% to 8% below estimate
         winning_bid_amount = round(est_value * winning_discount, 2)
         
+        winning_supp_info = next(s for s in suppliers_records if s["supplier_id"] == winning_sup_id)
+        raw_win_name = make_noisy_name(winning_supp_info["canonical_name"])
+        resolver.resolve(raw_win_name, pan_or_cin=winning_supp_info["pan_or_cin"], state_region=winning_supp_info["state_region"])
+        
         bids_list.append({
             "bid_id": f"BID-{bid_counter:06d}",
             "tender_id": tender_id,
             "supplier_id": winning_sup_id,
-            "raw_supplier_name": next(s["canonical_name"] for s in suppliers_records if s["supplier_id"] == winning_sup_id),
+            "raw_supplier_name": raw_win_name,
             "bid_amount_inr": winning_bid_amount,
             "submission_timestamp": (submission_deadline - timedelta(hours=random.randint(2, 48))).strftime("%Y-%m-%d %H:%M:%S"),
             "technical_qualified": 1,
@@ -307,11 +321,15 @@ def generate_benchmark_procurement_data(seed: int = 42) -> Tuple[
         for ob_id in other_bidders:
             losing_bid_amount = round(winning_bid_amount * random.uniform(1.02, 1.25), 2)
             tech_pass = 1 if random.random() > 0.15 else 0
+            other_supp_info = next(s for s in suppliers_records if s["supplier_id"] == ob_id)
+            raw_other_name = make_noisy_name(other_supp_info["canonical_name"])
+            resolver.resolve(raw_other_name, pan_or_cin=other_supp_info["pan_or_cin"], state_region=other_supp_info["state_region"])
+            
             bids_list.append({
                 "bid_id": f"BID-{bid_counter:06d}",
                 "tender_id": tender_id,
                 "supplier_id": ob_id,
-                "raw_supplier_name": next(s["canonical_name"] for s in suppliers_records if s["supplier_id"] == ob_id),
+                "raw_supplier_name": raw_other_name,
                 "bid_amount_inr": losing_bid_amount,
                 "submission_timestamp": (submission_deadline - timedelta(hours=random.randint(4, 96))).strftime("%Y-%m-%d %H:%M:%S"),
                 "technical_qualified": tech_pass,
