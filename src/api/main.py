@@ -245,7 +245,7 @@ def search_tenders(
         df = pd.read_sql_query(text(sql), conn, params=params)
     return df.to_dict(orient="records")
 
-@app.get("/api/tenders/{ref}")
+@app.get("/api/tenders/{ref:path}")
 def get_tender_detail(ref: str):
     """Retrieve complete lifecycle audit for an individual tender record."""
     engine = get_engine()

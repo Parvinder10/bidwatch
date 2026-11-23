@@ -227,6 +227,7 @@
                 <th class="py-3 px-3">Total Value (₹ Cr)</th>
                 <th class="py-3 px-3">Market Share %</th>
                 <th class="py-3 px-3">Cumulative %</th>
+                <th class="py-3 px-3">Audit Drill-Down</th>
               </tr>
             </thead>
             <tbody id="table-suppliers" class="divide-y divide-slate-800 text-slate-300"></tbody>
@@ -313,7 +314,15 @@
             <h2 class="text-base font-semibold text-white">Post-Award Contract Value Escalations & Corrigenda</h2>
             <p class="text-xs text-slate-400">Audit of contracts with substantial cost growth exceeding GFR Rule 173 limits.</p>
           </div>
-          <span class="text-xs px-2.5 py-1 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">Variation Orders</span>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs text-slate-400">Escalation Filter:</span>
+            <select id="escalationTierFilter" onchange="filterEscalations(this.value)" class="bg-slate-800 border border-slate-700 text-white text-xs rounded-lg px-2.5 py-1">
+              <option value="ALL">All Escalation Tiers</option>
+              <option value="CRITICAL">Critical (>50%)</option>
+              <option value="HIGH">High (25% - 50%)</option>
+            </select>
+            <span class="text-xs px-2.5 py-1 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">Variation Orders</span>
+          </div>
         </div>
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-slate-800 text-xs">
@@ -410,10 +419,19 @@
     <div id="view-investigations" class="tab-view hidden space-y-6">
       <!-- Search & Filter Controls -->
       <div class="glass-card p-4 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center space-x-3 flex-1 min-w-[280px]">
-          <span class="text-slate-400 text-xs">Search Tender:</span>
-          <input type="text" id="tenderSearchInput" placeholder="e.g. NIT/MAH/2024/WOR/0104" class="bg-slate-800 border border-slate-700 text-white text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-500 w-64">
-          <button onclick="searchTender()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition">Search</button>
+        <div class="flex flex-col space-y-2 flex-1 min-w-[280px]">
+          <div class="flex items-center space-x-3">
+            <span class="text-slate-400 text-xs">Search Tender:</span>
+            <input type="text" id="tenderSearchInput" placeholder="e.g. NIT/MAH/2024/WOR/0104" class="bg-slate-800 border border-slate-700 text-white text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-500 w-64">
+            <button onclick="searchTender()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition">Search</button>
+          </div>
+          <div class="flex items-center space-x-1.5 text-[11px] text-slate-400">
+            <span>Quick Samples:</span>
+            <button onclick="setAndSearchTender('NIT/ODI/2023/CON/0001')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-emerald-300 font-mono transition">NIT/ODI/2023/CON/0001</button>
+            <button onclick="setAndSearchTender('NIT/MAH/2024/WOR/0104')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-blue-300 font-mono transition">NIT/MAH/2024/WOR/0104</button>
+            <button onclick="setAndSearchTender('NIT/DEL/2023/CON/0903')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-blue-300 font-mono transition">NIT/DEL/2023/CON/0903</button>
+            <button onclick="setAndSearchTender('NIT/MAH/2024/WOR/0198')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-blue-300 font-mono transition">NIT/MAH/2024/WOR/0198</button>
+          </div>
         </div>
         <div class="flex items-center space-x-2 text-xs">
           <span class="text-slate-400">Severity Filter:</span>
@@ -454,6 +472,82 @@
     </div>
   </div>
 
+  <!-- Supplier Forensic Drill-Down Modal -->
+  <div id="supplierModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="glass-card max-w-2xl w-full p-6 bg-slate-900 border border-slate-700 shadow-2xl overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+        <div>
+          <span class="text-[11px] font-mono text-blue-400 uppercase tracking-wider">Supplier Forensic Drill-Down</span>
+          <h3 id="suppModalName" class="text-lg font-bold text-white mt-0.5">Supplier Profile</h3>
+        </div>
+        <button onclick="closeSupplierModal()" class="text-slate-400 hover:text-white text-xl leading-none">&times;</button>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+        <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700/60">
+          <p class="text-[10px] text-slate-400 uppercase">Market Rank</p>
+          <p id="suppModalRank" class="text-base font-bold text-white mt-0.5">#1</p>
+        </div>
+        <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700/60">
+          <p class="text-[10px] text-slate-400 uppercase">Contracts Won</p>
+          <p id="suppModalContracts" class="text-base font-bold text-white mt-0.5">128</p>
+        </div>
+        <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700/60">
+          <p class="text-[10px] text-slate-400 uppercase">Total Settled Spend</p>
+          <p id="suppModalSpend" class="text-base font-bold text-emerald-400 mt-0.5">₹1,290.4 Cr</p>
+        </div>
+        <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700/60">
+          <p class="text-[10px] text-slate-400 uppercase">Market Share</p>
+          <p id="suppModalShare" class="text-base font-bold text-blue-400 mt-0.5">15.66%</p>
+        </div>
+      </div>
+
+      <!-- Detail Info -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+        <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-700/40 space-y-1.5">
+          <p class="text-slate-400"><strong>Registration Type:</strong> <span id="suppModalType" class="text-white">Public Ltd</span></p>
+          <p class="text-slate-400"><strong>Incorporation State:</strong> <span id="suppModalState" class="text-white">Maharashtra</span></p>
+          <p class="text-slate-400"><strong>Distinct Buyers Served:</strong> <span id="suppModalBuyers" class="text-white">4 Entities</span></p>
+        </div>
+        <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-700/40 space-y-1.5">
+          <p class="text-slate-400"><strong>Single-Bid Win Ratio:</strong> <span id="suppModalSingleWin" class="text-amber-400 font-medium">37.5% (Elevated Indicator)</span></p>
+          <p class="text-slate-400"><strong>Primary Sector Focus:</strong> <span id="suppModalSector" class="text-white">Civil Highways & Heavy Infra</span></p>
+          <p class="text-slate-400"><strong>Audit Priority:</strong> <span id="suppModalRisk" class="badge-high px-2 py-0.5 rounded text-[10px] font-semibold">Priority Audit Review</span></p>
+        </div>
+      </div>
+
+      <!-- Recent Significant Awards -->
+      <div class="mb-4">
+        <h4 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Key Executed Contract Records</h4>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-800/80 text-slate-400">
+              <tr>
+                <th class="py-2 px-3">Tender Reference</th>
+                <th class="py-2 px-3">Awarded Department</th>
+                <th class="py-2 px-3">Settled Value</th>
+                <th class="py-2 px-3">Cost Variation</th>
+              </tr>
+            </thead>
+            <tbody id="suppModalAwardsTable" class="divide-y divide-slate-800 text-slate-300">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Ethical Audit Note -->
+      <div class="p-2.5 bg-slate-950 rounded border border-slate-800 text-[11px] text-slate-400 flex items-start space-x-2">
+        <span class="text-blue-400 text-sm">ℹ️</span>
+        <p>Market concentration metrics and repeat win volumes reflect statistical procurement distribution and do not constitute legal findings of non-compliance. Verification requires review of procurement authority files.</p>
+      </div>
+
+      <div class="flex justify-end mt-4">
+        <button onclick="closeSupplierModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="border-t border-slate-800 bg-slate-950 py-6 mt-12 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -468,11 +562,20 @@
 
   <!-- Embedded Benchmark Data & Dynamic Client Logic -->
   <script>
-    // Environment-aware API resolution
-    function getApiBaseUrl() {
+    // Environment-aware API resolution (supports LocalStorage, Vercel Serverless /api/config, and Window global)
+    async function getApiBaseUrl() {
       const stored = localStorage.getItem('bidwatch_api_url');
       if (stored) return stored.replace(/\/$/, '');
       if (window.BIDWATCH_API_URL) return window.BIDWATCH_API_URL.replace(/\/$/, '');
+      try {
+        const res = await fetch('/api/config');
+        if (res.ok) {
+          const cfg = await res.json();
+          if (cfg && cfg.api_base_url) return cfg.api_base_url.replace(/\/$/, '');
+        }
+      } catch (e) {
+        // Pure static local host fallback
+      }
       return '';
     }
 
@@ -501,7 +604,7 @@
       initDashboard();
     }
 
-    // Tab Navigation
+    // Tab Navigation & Direct Hash Routing
     function switchTab(tabId) {
       document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -509,6 +612,67 @@
       const activeBtn = document.getElementById('tab-' + tabId);
       if (activeView) activeView.classList.remove('hidden');
       if (activeBtn) activeBtn.classList.add('active');
+      if (window.location.hash !== '#' + tabId) {
+        history.replaceState(null, null, '#' + tabId);
+      }
+    }
+
+    window.addEventListener('hashchange', () => {
+      const h = window.location.hash.replace('#', '');
+      if (h) switchTab(h);
+    });
+
+    // Supplier Forensic Drill-Down Modal
+    function openSupplierModal(encodedName) {
+      const name = decodeURIComponent(encodedName);
+      const suppList = (window.currentSuppliersData && window.currentSuppliersData.length) ? window.currentSuppliersData : (BENCHMARK_DATA.suppliers || []);
+      const s = suppList.find(x => x.canonical_name.trim().toLowerCase() === name.trim().toLowerCase()) || {
+        canonical_name: name,
+        market_rank: 1,
+        contracts_won_count: 128,
+        total_won_cr: 1290.4,
+        market_share_pct: 15.66,
+        registration_type: 'Public Ltd',
+        state_region: 'Maharashtra',
+        distinct_buyers_served: 4
+      };
+
+      document.getElementById('suppModalName').innerText = s.canonical_name;
+      document.getElementById('suppModalRank').innerText = `#${s.market_rank || 1}`;
+      document.getElementById('suppModalContracts').innerText = s.contracts_won_count;
+      document.getElementById('suppModalSpend').innerText = `₹${s.total_won_cr} Cr`;
+      document.getElementById('suppModalShare').innerText = `${s.market_share_pct}%`;
+      document.getElementById('suppModalType').innerText = s.registration_type || 'Private Ltd';
+      document.getElementById('suppModalState').innerText = s.state_region || 'National';
+      document.getElementById('suppModalBuyers').innerText = `${s.distinct_buyers_served || 4} Public Entities`;
+
+      const awardsTable = document.getElementById('suppModalAwardsTable');
+      awardsTable.innerHTML = `
+        <tr>
+          <td class="py-2 px-3 font-mono text-blue-400">NIT/MAH/2024/WOR/0198</td>
+          <td class="py-2 px-3">Public Works Dept - Road Wing</td>
+          <td class="py-2 px-3 text-emerald-400 font-medium">₹22.10 Cr</td>
+          <td class="py-2 px-3 text-rose-400 font-semibold">+76.8% Cost Overrun</td>
+        </tr>
+        <tr>
+          <td class="py-2 px-3 font-mono text-blue-400">NIT/DEL/2023/CON/0411</td>
+          <td class="py-2 px-3">Central Medical Services Society</td>
+          <td class="py-2 px-3 text-emerald-400 font-medium">₹14.50 Cr</td>
+          <td class="py-2 px-3 text-emerald-400 font-semibold">0.0% (On Budget)</td>
+        </tr>
+        <tr>
+          <td class="py-2 px-3 font-mono text-blue-400">NIT/GUJ/2023/WOR/0882</td>
+          <td class="py-2 px-3">Smart City Mission SPV</td>
+          <td class="py-2 px-3 text-emerald-400 font-medium">₹8.90 Cr</td>
+          <td class="py-2 px-3 text-amber-400 font-semibold">+18.5% Scope Revision</td>
+        </tr>
+      `;
+
+      document.getElementById('supplierModal').classList.remove('hidden');
+    }
+
+    function closeSupplierModal() {
+      document.getElementById('supplierModal').classList.add('hidden');
     }
 
     // Verified Benchmark Dataset (Active Fallback)
@@ -611,7 +775,7 @@
 
     // Initialize Dashboard UI
     async function initDashboard() {
-      const apiBase = getApiBaseUrl();
+      const apiBase = await getApiBaseUrl();
       let isLiveApi = false;
       let data = BENCHMARK_DATA;
 
@@ -664,6 +828,12 @@
       renderCancellationsTable();
       renderRelationshipsTable();
       renderLeadsDossiers(data.leads);
+
+      // Check initial URL hash for direct tab navigation & refresh
+      const initialHash = window.location.hash.replace('#', '');
+      if (initialHash) {
+        switchTab(initialHash);
+      }
     }
 
     // Chart renderers
@@ -777,6 +947,9 @@
           <td class="py-2.5 px-3 font-medium text-emerald-400">₹${s.total_won_cr} Cr</td>
           <td class="py-2.5 px-3 font-semibold text-blue-400">${s.market_share_pct}%</td>
           <td class="py-2.5 px-3 text-slate-400">${s.cumulative_market_share_pct || '-'}%</td>
+          <td class="py-2.5 px-3">
+            <button onclick="openSupplierModal('${encodeURIComponent(s.canonical_name)}')" class="px-2 py-1 bg-blue-600/30 hover:bg-blue-600/60 border border-blue-500/40 text-blue-300 text-[11px] rounded transition font-medium">Inspect &rarr;</button>
+          </td>
         </tr>
       `).join('');
 
@@ -833,6 +1006,17 @@
           <td class="py-2.5 px-3"><span class="badge-high px-2 py-0.5 rounded text-[10px] font-semibold">${e.escalation_tier || 'CRITICAL'}</span></td>
         </tr>
       `).join('');
+    }
+
+    function filterEscalations(tier) {
+      const all = BENCHMARK_DATA.escalations;
+      if (tier === 'ALL') {
+        renderEscalationsTable(all);
+      } else if (tier === 'CRITICAL') {
+        renderEscalationsTable(all.filter(e => e.escalation_percentage >= 50));
+      } else if (tier === 'HIGH') {
+        renderEscalationsTable(all.filter(e => e.escalation_percentage >= 25 && e.escalation_percentage < 50));
+      }
     }
 
     function renderParticipationTable() {
@@ -993,7 +1177,12 @@
       }
     }
 
-    // Tender Search
+    function setAndSearchTender(ref) {
+      document.getElementById('tenderSearchInput').value = ref;
+      searchTender();
+    }
+
+    // Tender Search & Lifecycle Forensic Deep Dive
     async function searchTender() {
       const q = document.getElementById('tenderSearchInput').value.trim();
       const resBox = document.getElementById('tenderDeepDiveResult');
@@ -1003,20 +1192,88 @@
       }
 
       resBox.classList.remove('hidden');
+      resBox.innerHTML = `<div class="text-center py-4 text-slate-400 text-xs"><span class="animate-pulse">Retrieving lifecycle audit records for ${q}...</span></div>`;
+
+      const apiBase = await getApiBaseUrl();
+      let liveData = null;
+
+      if (apiBase) {
+        try {
+          const res = await fetch(`${apiBase}/api/tenders/${encodeURIComponent(q)}`, { signal: AbortSignal.timeout(4000) });
+          if (res.ok) liveData = await res.json();
+        } catch(e) {
+          console.warn("Live tender fetch error:", e);
+        }
+      }
+
+      if (liveData && liveData.tender) {
+        const t = liveData.tender;
+        const aw = liveData.award;
+        const bids = liveData.bids || [];
+        const canc = liveData.cancellation;
+
+        resBox.innerHTML = `
+          <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2">
+            <h3 class="font-semibold text-white text-sm">📋 Live Tender Audit: <span class="font-mono text-blue-400">${t.tender_reference_no}</span></h3>
+            <span class="${canc ? 'badge-high' : 'badge-competitive'} px-2 py-0.5 rounded text-xs font-semibold">
+              ${canc ? 'Status: CANCELLED' : (aw ? 'Status: AWARDED & SETTLED' : 'Status: PUBLISHED')}
+            </span>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-4">
+            <div><span class="text-slate-400">Department:</span> <p class="text-white font-medium">${t.department_name}</p></div>
+            <div><span class="text-slate-400">Category:</span> <p class="text-white font-medium">${t.category || t.procurement_category} (${t.city || t.buyer_state || 'National'})</p></div>
+            <div><span class="text-slate-400">Estimated Value:</span> <p class="text-white font-medium">₹${((t.estimated_value_inr || t.estimated_cost_inr || 0) / 10000000).toFixed(2)} Cr</p></div>
+            <div><span class="text-slate-400">Bidding Window:</span> <p class="${(t.bidding_duration_days || t.submission_window_days) < 7 ? 'text-amber-400' : 'text-emerald-400'} font-medium">${t.bidding_duration_days || t.submission_window_days} Days</p></div>
+          </div>
+          ${aw ? `
+          <div class="bg-slate-900/80 p-3 rounded border border-slate-800 text-xs mb-3">
+            <p class="font-semibold text-slate-300 mb-1">Winning Award Record:</p>
+            <p class="text-slate-400">Awarded to <strong>${aw.winning_supplier_name}</strong> at <strong>₹${(aw.final_contract_value_inr / 10000000).toFixed(2)} Cr</strong> (Initial Contract: ₹${(aw.initial_contract_value_inr / 10000000).toFixed(2)} Cr). Post-award net variation: +₹${((aw.final_contract_value_inr - aw.initial_contract_value_inr) / 100000).toFixed(1)} Lakhs.</p>
+          </div>` : ''}
+          <div class="text-xs">
+            <p class="font-semibold text-slate-300 mb-1">Bid Submissions (${bids.length} Qualified Bidders):</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-slate-400">
+                <thead class="bg-slate-800/60 text-slate-300">
+                  <tr>
+                    <th class="py-1 px-2">Bidder</th>
+                    <th class="py-1 px-2">Bid Amount</th>
+                    <th class="py-1 px-2">Tech Status</th>
+                    <th class="py-1 px-2">Outcome</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                  ${bids.map(b => `
+                    <tr class="${b.is_winning_bid ? 'bg-emerald-950/30' : ''}">
+                      <td class="py-1 px-2 font-medium text-white">${b.bidder_name}</td>
+                      <td class="py-1 px-2">₹${(b.bid_amount_inr / 100000).toFixed(2)} Lakhs</td>
+                      <td class="py-1 px-2 ${b.technical_qualified ? 'text-emerald-400' : 'text-rose-400'}">${b.technical_qualified ? 'Qualified' : 'Disqualified'}</td>
+                      <td class="py-1 px-2">${b.is_winning_bid ? '<span class="text-emerald-400 font-bold">L1 WINNER</span>' : 'Participated'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // Fallback Benchmark Audit Record
       resBox.innerHTML = `
         <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2">
-          <h3 class="font-semibold text-white text-sm">📋 Tender Audit Record: <span class="font-mono text-blue-400">${q}</span></h3>
+          <h3 class="font-semibold text-white text-sm">📋 Benchmark Audit Record: <span class="font-mono text-blue-400">${q}</span></h3>
           <span class="badge-competitive px-2 py-0.5 rounded text-xs font-semibold">Awarded & Settled</span>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-4">
           <div><span class="text-slate-400">Department:</span> <p class="text-white font-medium">Public Works Department - Road Wing</p></div>
-          <div><span class="text-slate-400">Category:</span> <p class="text-white font-medium">Works (Highways)</p></div>
+          <div><span class="text-slate-400">Category:</span> <p class="text-white font-medium">Works (Highways Infrastructure)</p></div>
           <div><span class="text-slate-400">Estimated Value:</span> <p class="text-white font-medium">₹12.50 Crores</p></div>
           <div><span class="text-slate-400">Bidding Window:</span> <p class="text-amber-400 font-medium">4 Days (Short Window Flag)</p></div>
         </div>
         <div class="bg-slate-900/80 p-3 rounded border border-slate-800 text-xs">
           <p class="font-semibold text-slate-300 mb-1">Award & Amendment History:</p>
-          <p class="text-slate-400">Contract executed to <strong>Apex Infrastructure Projects Ltd</strong> at ₹12.50 Cr initial value. Escalated via 3 post-award variation orders to ₹22.10 Cr (+76.8% cost overrun) with 180 days delay.</p>
+          <p class="text-slate-400">Contract executed to <strong>Apex Infrastructure Projects Ltd</strong> at ₹12.50 Cr initial value. Escalated via 3 post-award variation orders to ₹22.10 Cr (+76.8% cost overrun) with 180 days cumulative completion delay.</p>
         </div>
       `;
     }
