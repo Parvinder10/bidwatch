@@ -3,257 +3,1026 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BIDWATCH | Public Procurement Intelligence & Investigative Analytics</title>
+  <title>BIDWATCH | Public Procurement Intelligence & Investigative Analytics Platform</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    body { font-family: 'Inter', sans-serif; background-color: #0F172A; color: #F8FAFC; }
-    .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #0B1120; color: #F1F5F9; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .glass-card { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; }
+    .tab-btn.active { background-color: #1E3A8A; color: #93C5FD; border-color: #3B82F6; font-weight: 600; }
     .badge-high { background-color: rgba(239, 68, 68, 0.2); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.4); }
     .badge-elevated { background-color: rgba(245, 158, 11, 0.2); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.4); }
     .badge-medium { background-color: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .badge-competitive { background-color: rgba(16, 185, 129, 0.2); color: #6EE7B7; border: 1px solid rgba(16, 185, 129, 0.4); }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
-  <!-- Navigation Header -->
-  <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-50 backdrop-blur-md">
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- Top Disclaimer / Provenance Banner -->
+  <div class="bg-blue-950/80 border-b border-blue-800/50 px-4 py-1.5 text-xs text-blue-300 text-center flex items-center justify-center space-x-2">
+    <span>💡 <strong>Ethical Oversight Notice:</strong> BIDWATCH identifies statistical procurement patterns requiring human verification and never accuses entities of wrongdoing.</span>
+    <span class="text-blue-500">•</span>
+    <span class="bg-blue-900/60 text-blue-200 px-2 py-0.5 rounded font-medium border border-blue-700/50">Benchmark Demonstration Dataset</span>
+  </div>
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-900/90 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <span class="text-2xl">🛡️</span>
         <div>
-          <span class="text-xl font-bold tracking-tight text-white">BIDWATCH</span>
-          <span class="text-xs px-2 py-0.5 ml-2 rounded font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">Vigilance Intelligence</span>
+          <div class="flex items-center space-x-2">
+            <span class="text-xl font-bold tracking-tight text-white">BIDWATCH</span>
+            <span class="text-[10px] px-2 py-0.5 rounded font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">Vercel Edge</span>
+          </div>
+          <p class="text-[11px] text-slate-400 hidden sm:block">Public Procurement Intelligence & Investigative Analytics</p>
         </div>
       </div>
-      <div class="flex items-center space-x-4">
-        <a href="https://bidwatch.streamlit.app/" target="_blank" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium text-sm flex items-center space-x-2 transition shadow-lg shadow-red-600/30">
-          <span>🚀 Open Live Streamlit App</span>
+
+      <!-- Right Action Controls -->
+      <div class="flex items-center space-x-3 text-xs">
+        <button onclick="openApiModal()" id="apiStatusBadge" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-medium flex items-center space-x-1.5 transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="apiStatusText">API: Auto/Edge</span>
+        </button>
+        <a href="https://bidwatch.streamlit.app/" target="_blank" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-medium flex items-center space-x-1.5 transition shadow-sm">
+          <span>🚀 Live Streamlit App</span>
         </a>
-        <a href="https://github.com/Parvinder10/bidwatch" target="_blank" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-sm border border-slate-700 transition flex items-center space-x-2">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
+        <a href="https://github.com/Parvinder10/bidwatch" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium border border-slate-700 transition flex items-center space-x-1.5">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span class="hidden sm:inline">GitHub</span>
         </a>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs Bar (9 Required Analytical Modules) -->
+    <div class="border-t border-slate-800 bg-slate-900/60 px-4 overflow-x-auto scrollbar-none">
+      <div class="max-w-7xl mx-auto flex space-x-1 py-1.5 text-xs">
+        <button onclick="switchTab('overview')" class="tab-btn active px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-overview">📊 Overview</button>
+        <button onclick="switchTab('competition')" class="tab-btn px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-competition">⚔️ Competition</button>
+        <button onclick="switchTab('suppliers')" class="tab-btn px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-suppliers">🏆 Supplier Performance</button>
+        <button onclick="switchTab('concentration')" class="tab-btn px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-concentration">🏢 Concentration (HHI)</button>
+        <button onclick="switchTab('departments')" class="tab-btn px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-departments">🏛️ Department Spend</button>
+        <button onclick="switchTab('escalations')" class="tab-btn px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-escalations">📈 Cost Escalation</button>
+        <button onclick="switchTab('cancellations')" class="tab-btn px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-cancellations">❌ Cancellations</button>
+        <button onclick="switchTab('relationships')" class="tab-btn px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-relationships">🔄 Relationships</button>
+        <button onclick="switchTab('investigations')" class="tab-btn px-3 py-1.5 rounded-md border border-transparent hover:bg-slate-800 transition whitespace-nowrap" id="tab-investigations">🔍 Investigation Dossiers</button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
-    <!-- Hero / Headline -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-extrabold text-white sm:text-4xl">Public Procurement Intelligence Platform</h1>
-      <p class="mt-2 text-slate-400 max-w-3xl">Investigative audit radar tracking tender notices, vendor concentration (HHI), repeat wins, single-bidder awards, and post-award cost escalations across 25 procuring bodies.</p>
-    </div>
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
 
-    <!-- Macro KPI Cards -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+    <!-- KPI Metric Cards (Visible across tabs) -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 mb-6">
       <div class="glass-card p-4">
-        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Published Tenders</p>
-        <p class="text-2xl font-bold text-white mt-1">1,250</p>
-        <span class="text-xs text-emerald-400 mt-1 inline-block">2022 – 2025 Period</span>
+        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Total Tenders</p>
+        <p class="text-2xl font-bold text-white mt-1" id="kpi-tenders">1,250</p>
+        <p class="text-[11px] text-emerald-400 mt-0.5">89.4% Awarded</p>
       </div>
       <div class="glass-card p-4">
-        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Awarded Contracts</p>
-        <p class="text-2xl font-bold text-white mt-1">1,133</p>
-        <span class="text-xs text-blue-400 mt-1 inline-block">89.4% Completion</span>
+        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Awarded Contracts</p>
+        <p class="text-2xl font-bold text-white mt-1" id="kpi-awarded">1,133</p>
+        <p class="text-[11px] text-blue-400 mt-0.5">25 Departments</p>
       </div>
       <div class="glass-card p-4">
-        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Settled Spend</p>
-        <p class="text-2xl font-bold text-white mt-1">₹8,241 Cr</p>
-        <span class="text-xs text-slate-400 mt-1 inline-block">Final Disbursed</span>
+        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Settled Spend</p>
+        <p class="text-2xl font-bold text-white mt-1" id="kpi-settled">₹8,241 Cr</p>
+        <p class="text-[11px] text-slate-400 mt-0.5">Across 10 States</p>
       </div>
       <div class="glass-card p-4">
-        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Post-Award Escalation</p>
-        <p class="text-2xl font-bold text-rose-400 mt-1">+₹574.4 Cr</p>
-        <span class="text-xs text-rose-300 mt-1 inline-block">+7.5% Portfolio Overrun</span>
+        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Post-Award Escalation</p>
+        <p class="text-2xl font-bold text-rose-400 mt-1" id="kpi-escalation">+₹574.4 Cr</p>
+        <p class="text-[11px] text-rose-300 mt-0.5">+7.5% Portfolio Growth</p>
       </div>
       <div class="glass-card p-4">
-        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Cancellation Rate</p>
-        <p class="text-2xl font-bold text-amber-400 mt-1">9.36%</p>
-        <span class="text-xs text-slate-400 mt-1 inline-block">117 Annulled Tenders</span>
+        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Cancellation Rate</p>
+        <p class="text-2xl font-bold text-amber-400 mt-1" id="kpi-cancellation">9.36%</p>
+        <p class="text-[11px] text-slate-400 mt-0.5">117 Annulled Notices</p>
       </div>
     </div>
 
-    <!-- Visual Analytics Row -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-      <!-- Chart 1: Department HHI Concentration -->
+    <!-- ========================================================================= -->
+    <!-- TAB 1: PROCUREMENT OVERVIEW -->
+    <!-- ========================================================================= -->
+    <div id="view-overview" class="tab-view space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="glass-card p-6 lg:col-span-2">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-white">Monthly Procurement Spend & Contracts Awarded</h2>
+              <p class="text-xs text-slate-400">Tracking multi-year expenditure flows and fiscal quarter-end surges.</p>
+            </div>
+            <span class="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">Temporal MoM</span>
+          </div>
+          <div class="h-64">
+            <canvas id="chart-trends"></canvas>
+          </div>
+        </div>
+
+        <div class="glass-card p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-white">Procurement by Category</h2>
+              <p class="text-xs text-slate-400">Capital split across categories.</p>
+            </div>
+            <span class="text-xs px-2 py-1 rounded bg-slate-800 text-slate-300">Share %</span>
+          </div>
+          <div class="h-64 flex items-center justify-center">
+            <canvas id="chart-category"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Insights -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card p-4 border-l-4 border-l-rose-500">
+          <h3 class="text-sm font-semibold text-white">⚠️ Extreme Vendor Dominance</h3>
+          <p class="text-xs text-slate-400 mt-1">4 departments exceed HHI > 2500, indicating severe supplier concentration and barrier to entry risk.</p>
+        </div>
+        <div class="glass-card p-4 border-l-4 border-l-amber-500">
+          <h3 class="text-sm font-semibold text-white">📈 Cost Escalation Tracking</h3>
+          <p class="text-xs text-slate-400 mt-1">134 contracts expanded by > 30% post-award, totaling ₹574.4 Cr in post-award amendments.</p>
+        </div>
+        <div class="glass-card p-4 border-l-4 border-l-blue-500">
+          <h3 class="text-sm font-semibold text-white">🔍 Solitary Bidder Awards</h3>
+          <p class="text-xs text-slate-400 mt-1">84 open competitive tenders were finalized with only a single participating bidder without retendering.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: COMPETITION & PARTICIPATION -->
+    <!-- ========================================================================= -->
+    <div id="view-competition" class="tab-view hidden space-y-6">
       <div class="glass-card p-6">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-semibold text-white">Department Vendor Concentration (HHI)</h2>
-          <span class="text-xs px-2 py-1 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">DOJ Threshold > 2,500</span>
+          <div>
+            <h2 class="text-base font-semibold text-white">Tender Participation & Single-Bidder Conversion Analysis</h2>
+            <p class="text-xs text-slate-400">Audits bidder volume, qualification rates, and solitary bidder wins.</p>
+          </div>
+          <span class="text-xs px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">CVC Guideline Audit</span>
         </div>
-        <div class="h-64">
-          <canvas id="hhiChart"></canvas>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-800 text-xs">
+            <thead>
+              <tr class="text-slate-400 text-left bg-slate-900/50">
+                <th class="py-3 px-3">Supplier Name</th>
+                <th class="py-3 px-3">State</th>
+                <th class="py-3 px-3">MSME</th>
+                <th class="py-3 px-3">Bids Submitted</th>
+                <th class="py-3 px-3">Total Wins</th>
+                <th class="py-3 px-3">Win Rate %</th>
+                <th class="py-3 px-3">Single-Bidder Wins</th>
+                <th class="py-3 px-3">Single-Bidder Share %</th>
+                <th class="py-3 px-3">Risk Classification</th>
+              </tr>
+            </thead>
+            <tbody id="table-participation" class="divide-y divide-slate-800 text-slate-300"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: SUPPLIER PERFORMANCE & REPEAT WINS -->
+    <!-- ========================================================================= -->
+    <div id="view-suppliers" class="tab-view hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="glass-card p-6 lg:col-span-2">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-white">Top Suppliers by Awarded Procurement Value</h2>
+              <p class="text-xs text-slate-400">Total contracts won and cumulative market share.</p>
+            </div>
+            <span class="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">Pareto Curve</span>
+          </div>
+          <div class="h-64">
+            <canvas id="chart-suppliers"></canvas>
+          </div>
+        </div>
+
+        <div class="glass-card p-6">
+          <h2 class="text-base font-semibold text-white mb-2">Supplier Market Share (Top 5)</h2>
+          <div class="space-y-3" id="supplier-top-cards"></div>
         </div>
       </div>
 
-      <!-- Chart 2: Category Spend Breakdown -->
+      <div class="glass-card p-6">
+        <h3 class="text-sm font-semibold text-white mb-3">Top 15 Supplier Performance Roster</h3>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-800 text-xs">
+            <thead>
+              <tr class="text-slate-400 text-left bg-slate-900/50">
+                <th class="py-3 px-3">Rank</th>
+                <th class="py-3 px-3">Supplier Name</th>
+                <th class="py-3 px-3">Entity Type</th>
+                <th class="py-3 px-3">Region</th>
+                <th class="py-3 px-3">Awards Won</th>
+                <th class="py-3 px-3">Buyers Served</th>
+                <th class="py-3 px-3">Total Value (₹ Cr)</th>
+                <th class="py-3 px-3">Market Share %</th>
+                <th class="py-3 px-3">Cumulative %</th>
+              </tr>
+            </thead>
+            <tbody id="table-suppliers" class="divide-y divide-slate-800 text-slate-300"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: SUPPLIER CONCENTRATION (HHI) -->
+    <!-- ========================================================================= -->
+    <div id="view-concentration" class="tab-view hidden space-y-6">
       <div class="glass-card p-6">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-semibold text-white">Procurement Spend by Category</h2>
-          <span class="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">Total: ₹8,241 Cr</span>
+          <div>
+            <h2 class="text-base font-semibold text-white">Department Herfindahl-Hirschman Index (HHI)</h2>
+            <p class="text-xs text-slate-400">Antitrust vendor concentration metric. HHI > 2500 indicates high oligopoly / vendor capture risk.</p>
+          </div>
+          <span class="text-xs px-2.5 py-1 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">DOJ Standard</span>
         </div>
-        <div class="h-64 flex items-center justify-center">
-          <canvas id="categoryChart"></canvas>
+        <div class="h-64 mb-6">
+          <canvas id="chart-hhi-full"></canvas>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-800 text-xs">
+            <thead>
+              <tr class="text-slate-400 text-left bg-slate-900/50">
+                <th class="py-3 px-3">Department Name</th>
+                <th class="py-3 px-3">Ministry</th>
+                <th class="py-3 px-3">Contracts</th>
+                <th class="py-3 px-3">Winning Suppliers</th>
+                <th class="py-3 px-3">Total Spend (₹ Cr)</th>
+                <th class="py-3 px-3">HHI Score</th>
+                <th class="py-3 px-3">Concentration Status</th>
+                <th class="py-3 px-3">Audit Priority</th>
+              </tr>
+            </thead>
+            <tbody id="table-hhi" class="divide-y divide-slate-800 text-slate-300"></tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <!-- Priority Investigative Leads Preview -->
-    <div class="glass-card p-6 mb-8">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h2 class="text-lg font-semibold text-white">Priority Investigative Leads (Sample Radar)</h2>
-          <p class="text-xs text-slate-400">Structured findings generated by statistical baselines requiring human verification.</p>
+    <!-- ========================================================================= -->
+    <!-- TAB 5: DEPARTMENT SPEND & COMPARISONS -->
+    <!-- ========================================================================= -->
+    <div id="view-departments" class="tab-view hidden space-y-6">
+      <div class="glass-card p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-white">Department Procurement & Budget Utilization</h2>
+            <p class="text-xs text-slate-400">Settled expenditure vs sanctioned capital budget allocation.</p>
+          </div>
+          <span class="text-xs px-2.5 py-1 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">Budget Adherence</span>
         </div>
-        <span class="text-xs px-3 py-1 rounded-full font-semibold bg-red-500/20 text-red-400 border border-red-500/30">265 Leads Logged</span>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-slate-800 text-sm">
-          <thead>
-            <tr class="text-slate-400 text-left">
-              <th class="py-3 px-4">Severity</th>
-              <th class="py-3 px-4">Indicator</th>
-              <th class="py-3 px-4">Target Entity</th>
-              <th class="py-3 px-4">Observed Finding</th>
-              <th class="py-3 px-4">Baseline Comparison</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-800 text-slate-300">
-            <tr>
-              <td class="py-3 px-4"><span class="badge-high px-2 py-0.5 rounded text-xs font-semibold">HIGH</span></td>
-              <td class="py-3 px-4 font-mono text-xs text-blue-400">FLAG_HHI_CONCENTRATION</td>
-              <td class="py-3 px-4 font-medium text-white">BUY-001 (PWD Road Wing)</td>
-              <td class="py-3 px-4">Extreme vendor concentration (HHI: 4,920.1) across 178 contracts.</td>
-              <td class="py-3 px-4 text-xs text-slate-400">Exceeds competitive baseline (1,500) by +3,420 pts.</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><span class="badge-high px-2 py-0.5 rounded text-xs font-semibold">HIGH</span></td>
-              <td class="py-3 px-4 font-mono text-xs text-blue-400">FLAG_REPEAT_WINNER</td>
-              <td class="py-3 px-4 font-medium text-white">Apex Infrastructure Projects</td>
-              <td class="py-3 px-4">Won 124 contracts capturing 71.2% (₹1,248 Cr) of PWD's budget.</td>
-              <td class="py-3 px-4 text-xs text-slate-400">71.2% capture vs expected baseline (< 15%).</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><span class="badge-high px-2 py-0.5 rounded text-xs font-semibold">HIGH</span></td>
-              <td class="py-3 px-4 font-mono text-xs text-blue-400">FLAG_VALUE_ESCALATION</td>
-              <td class="py-3 px-4 font-medium text-white">NIT/DEL/2023/CON/0903</td>
-              <td class="py-3 px-4">Contract escalated +97.9% from ₹14.2 L to ₹28.1 L via 4 amendments.</td>
-              <td class="py-3 px-4 text-xs text-slate-400">Exceeds statutory GFR 173 cap (15%).</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><span class="badge-elevated px-2 py-0.5 rounded text-xs font-semibold">ELEVATED</span></td>
-              <td class="py-3 px-4 font-mono text-xs text-blue-400">FLAG_SHORT_BID_WINDOW</td>
-              <td class="py-3 px-4 font-medium text-white">NIT/MAH/2024/WOR/0104</td>
-              <td class="py-3 px-4">Bidding window of only 4 days allowed for ₹8.5 Cr works tender.</td>
-              <td class="py-3 px-4 text-xs text-slate-400">4 days vs statutory 21-day open tender norm.</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><span class="badge-medium px-2 py-0.5 rounded text-xs font-semibold">MEDIUM</span></td>
-              <td class="py-3 px-4 font-mono text-xs text-blue-400">FLAG_SINGLE_BIDDER</td>
-              <td class="py-3 px-4 font-medium text-white">NIT/GUJ/2023/GOO/0441</td>
-              <td class="py-3 px-4">Open tender awarded to solitary bidder with zero competition.</td>
-              <td class="py-3 px-4 text-xs text-slate-400">1 bidder vs open tender baseline (3.4 bidders).</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-800 text-xs">
+            <thead>
+              <tr class="text-slate-400 text-left bg-slate-900/50">
+                <th class="py-3 px-3">Rank</th>
+                <th class="py-3 px-3">Department</th>
+                <th class="py-3 px-3">Ministry</th>
+                <th class="py-3 px-3">State</th>
+                <th class="py-3 px-3">Tenders Awarded</th>
+                <th class="py-3 px-3">Cancelled</th>
+                <th class="py-3 px-3">Procurement (₹ Cr)</th>
+                <th class="py-3 px-3">Budget (₹ Cr)</th>
+                <th class="py-3 px-3">Budget Utilization %</th>
+              </tr>
+            </thead>
+            <tbody id="table-departments" class="divide-y divide-slate-800 text-slate-300"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- Quick Access Documentation Links -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <a href="https://github.com/Parvinder10/bidwatch/blob/main/docs/PROBLEM_STATEMENT.md" target="_blank" class="glass-card p-4 hover:border-blue-500/50 transition">
-        <h3 class="text-sm font-semibold text-white">📋 Problem Statement</h3>
-        <p class="text-xs text-slate-400 mt-1">Investigative boundaries & legal framework.</p>
-      </a>
-      <a href="https://github.com/Parvinder10/bidwatch/blob/main/docs/SYSTEM_ARCHITECTURE.md" target="_blank" class="glass-card p-4 hover:border-blue-500/50 transition">
-        <h3 class="text-sm font-semibold text-white">🏗️ Architecture & ERD</h3>
-        <p class="text-xs text-slate-400 mt-1">Data pipeline and relational schema.</p>
-      </a>
-      <a href="https://github.com/Parvinder10/bidwatch/blob/main/docs/SQL_ANALYSIS.md" target="_blank" class="glass-card p-4 hover:border-blue-500/50 transition">
-        <h3 class="text-sm font-semibold text-white">💻 SQL Query Library</h3>
-        <p class="text-xs text-slate-400 mt-1">9 production CTE & window queries.</p>
-      </a>
-      <a href="https://github.com/Parvinder10/bidwatch/blob/main/docs/POWER_BI_GUIDE.md" target="_blank" class="glass-card p-4 hover:border-blue-500/50 transition">
-        <h3 class="text-sm font-semibold text-white">📊 Power BI Integration</h3>
-        <p class="text-xs text-slate-400 mt-1">Star-schema modeling & DAX measures.</p>
-      </a>
+    <!-- ========================================================================= -->
+    <!-- TAB 6: COST ESCALATIONS & AMENDMENTS -->
+    <!-- ========================================================================= -->
+    <div id="view-escalations" class="tab-view hidden space-y-6">
+      <div class="glass-card p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-white">Post-Award Contract Value Escalations & Corrigenda</h2>
+            <p class="text-xs text-slate-400">Audit of contracts with substantial cost growth exceeding GFR Rule 173 limits.</p>
+          </div>
+          <span class="text-xs px-2.5 py-1 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">Variation Orders</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-800 text-xs">
+            <thead>
+              <tr class="text-slate-400 text-left bg-slate-900/50">
+                <th class="py-3 px-3">Rank</th>
+                <th class="py-3 px-3">Tender Ref</th>
+                <th class="py-3 px-3">Department</th>
+                <th class="py-3 px-3">Supplier Name</th>
+                <th class="py-3 px-3">Initial (₹ L)</th>
+                <th class="py-3 px-3">Final (₹ L)</th>
+                <th class="py-3 px-3">Net Escalation (₹ L)</th>
+                <th class="py-3 px-3">Escalation %</th>
+                <th class="py-3 px-3">Amendments</th>
+                <th class="py-3 px-3">Delay (Days)</th>
+                <th class="py-3 px-3">Severity Tier</th>
+              </tr>
+            </thead>
+            <tbody id="table-escalations" class="divide-y divide-slate-800 text-slate-300"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 7: CANCELLATIONS & TIMELINES -->
+    <!-- ========================================================================= -->
+    <div id="view-cancellations" class="tab-view hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass-card p-6">
+          <h2 class="text-base font-semibold text-white mb-2">Department Cancellation Rates</h2>
+          <p class="text-xs text-slate-400 mb-4">Departments exceeding peer cancellation baseline (11.1%).</p>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-800 text-xs">
+              <thead>
+                <tr class="text-slate-400 text-left bg-slate-900/50">
+                  <th class="py-2.5 px-3">Department</th>
+                  <th class="py-2.5 px-3">Total Notices</th>
+                  <th class="py-2.5 px-3">Cancelled</th>
+                  <th class="py-2.5 px-3">Rate %</th>
+                  <th class="py-2.5 px-3">Flag</th>
+                </tr>
+              </thead>
+              <tbody id="table-cancellations" class="divide-y divide-slate-800 text-slate-300"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="glass-card p-6">
+          <h2 class="text-base font-semibold text-white mb-2">Annulment Justifications Breakdown</h2>
+          <p class="text-xs text-slate-400 mb-4">Recorded administrative reasons for cancelling public notices.</p>
+          <div class="h-64 flex items-center justify-center">
+            <canvas id="chart-canc-reasons"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 8: BUYER-SUPPLIER RELATIONSHIPS -->
+    <!-- ========================================================================= -->
+    <div id="view-relationships" class="tab-view hidden space-y-6">
+      <div class="glass-card p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-white">Repeat Supplier Wins & Relationship Entrenchment</h2>
+            <p class="text-xs text-slate-400">Contractors capturing disproportionate procurement budget from a single procuring agency.</p>
+          </div>
+          <span class="text-xs px-2.5 py-1 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">Incumbency Audit</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-800 text-xs">
+            <thead>
+              <tr class="text-slate-400 text-left bg-slate-900/50">
+                <th class="py-3 px-3">Department Name</th>
+                <th class="py-3 px-3">Favored Supplier</th>
+                <th class="py-3 px-3">Awards Won</th>
+                <th class="py-3 px-3">Total Dept Awards</th>
+                <th class="py-3 px-3">Award Win Share %</th>
+                <th class="py-3 px-3">Captured Spend (₹ Cr)</th>
+                <th class="py-3 px-3">Buyer Spend Share %</th>
+                <th class="py-3 px-3">Concentration Tier</th>
+              </tr>
+            </thead>
+            <tbody id="table-relationships" class="divide-y divide-slate-800 text-slate-300"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 9: INVESTIGATION SUMMARIES & DRILL-DOWN -->
+    <!-- ========================================================================= -->
+    <div id="view-investigations" class="tab-view hidden space-y-6">
+      <!-- Search & Filter Controls -->
+      <div class="glass-card p-4 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center space-x-3 flex-1 min-w-[280px]">
+          <span class="text-slate-400 text-xs">Search Tender:</span>
+          <input type="text" id="tenderSearchInput" placeholder="e.g. NIT/MAH/2024/WOR/0104" class="bg-slate-800 border border-slate-700 text-white text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-500 w-64">
+          <button onclick="searchTender()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition">Search</button>
+        </div>
+        <div class="flex items-center space-x-2 text-xs">
+          <span class="text-slate-400">Severity Filter:</span>
+          <select id="severitySelect" onchange="filterLeadsBySeverity(this.value)" class="bg-slate-800 border border-slate-700 text-white rounded-lg px-2.5 py-1.5">
+            <option value="ALL">All Severities (265 Leads)</option>
+            <option value="HIGH">HIGH Severity</option>
+            <option value="ELEVATED">ELEVATED Severity</option>
+            <option value="MEDIUM">MEDIUM Severity</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Tender Deep Dive Result Box (if searched) -->
+      <div id="tenderDeepDiveResult" class="hidden glass-card p-6 border-blue-500/50"></div>
+
+      <!-- 5-Point Dossier Cards -->
+      <div class="space-y-4" id="leadsDossierList"></div>
+    </div>
+
   </main>
 
+  <!-- API Config Modal -->
+  <div id="apiModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="glass-card max-w-md w-full p-6 bg-slate-900 border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-base font-semibold text-white">⚙️ API & Backend Configuration</h3>
+        <button onclick="closeApiModal()" class="text-slate-400 hover:text-white">&times;</button>
+      </div>
+      <p class="text-xs text-slate-400 mb-4">Configure the procurement analytics backend URL. The frontend dynamically fetches live SQL analytics or seamlessly falls back to verified benchmark data.</p>
+      
+      <label class="block text-xs font-medium text-slate-300 mb-1">Backend API Base URL:</label>
+      <input type="text" id="customApiUrlInput" placeholder="http://localhost:8000" class="w-full bg-slate-800 border border-slate-700 text-white text-xs rounded-lg px-3 py-2 mb-3 focus:outline-none focus:border-blue-500">
+      
+      <div class="flex space-x-2 justify-end">
+        <button onclick="resetApiUrl()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition">Reset to Default</button>
+        <button onclick="saveApiUrl()" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition">Save & Re-test</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950 py-6 mt-12">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+  <footer class="border-t border-slate-800 bg-slate-950 py-6 mt-12 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p>BIDWATCH Public Procurement Intelligence Platform &bull; Engineered by Parvinder</p>
-      <p class="mt-1">Licensed under CC-BY-4.0 &bull; Open Governance & Anti-Corruption Analytics</p>
+      <div class="flex space-x-4">
+        <a href="https://github.com/Parvinder10/bidwatch" target="_blank" class="hover:text-slate-300 transition">GitHub Codebase</a>
+        <a href="https://bidwatch.streamlit.app/" target="_blank" class="hover:text-slate-300 transition">Streamlit Analytics Engine</a>
+        <a href="https://github.com/Parvinder10/bidwatch/blob/main/docs/DASHBOARD_INTERFACE.md" target="_blank" class="hover:text-slate-300 transition">UI Architecture Docs</a>
+      </div>
     </div>
   </footer>
 
+  <!-- Embedded Benchmark Data & Dynamic Client Logic -->
   <script>
-    // 1. HHI Chart
-    const ctxHhi = document.getElementById('hhiChart').getContext('2d');
-    new Chart(ctxHhi, {
-      type: 'bar',
-      data: {
-        labels: ['PWD Road Wing', 'NeGD IT Division', 'Defence Logistics', 'CMSS Health', 'Smart City SPV', 'Metro Rail Infra'],
-        datasets: [{
-          label: 'HHI Concentration Score',
-          data: [4920.1, 4125.4, 3810.2, 2890.6, 1750.3, 1420.5],
-          backgroundColor: [
-            'rgba(239, 68, 68, 0.8)',
-            'rgba(239, 68, 68, 0.8)',
-            'rgba(239, 68, 68, 0.8)',
-            'rgba(239, 68, 68, 0.8)',
-            'rgba(245, 158, 11, 0.8)',
-            'rgba(16, 185, 129, 0.8)'
-          ],
-          borderRadius: 6
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: {
-            grid: { color: 'rgba(255,255,255,0.05)' },
-            ticks: { color: '#94A3B8' }
-          },
-          x: {
-            grid: { display: false },
-            ticks: { color: '#94A3B8' }
-          }
-        }
-      }
-    });
+    // Environment-aware API resolution
+    function getApiBaseUrl() {
+      const stored = localStorage.getItem('bidwatch_api_url');
+      if (stored) return stored.replace(/\/$/, '');
+      if (window.BIDWATCH_API_URL) return window.BIDWATCH_API_URL.replace(/\/$/, '');
+      return '';
+    }
 
-    // 2. Category Donut Chart
-    const ctxCat = document.getElementById('categoryChart').getContext('2d');
-    new Chart(ctxCat, {
-      type: 'doughnut',
-      data: {
-        labels: ['Works', 'Goods', 'Consulting Services', 'Non-Consulting Services'],
-        datasets: [{
-          data: [4850.5, 2120.3, 850.2, 419.95],
-          backgroundColor: ['#3B82F6', '#10B981', '#8B5CF6', '#F59E0B'],
-          borderWidth: 0
-        }]
+    // Modal controls
+    function openApiModal() {
+      document.getElementById('customApiUrlInput').value = localStorage.getItem('bidwatch_api_url') || 'http://localhost:8000';
+      document.getElementById('apiModal').classList.remove('hidden');
+    }
+    function closeApiModal() {
+      document.getElementById('apiModal').classList.add('hidden');
+    }
+    function saveApiUrl() {
+      const val = document.getElementById('customApiUrlInput').value.trim();
+      if (val) {
+        localStorage.setItem('bidwatch_api_url', val);
+      } else {
+        localStorage.removeItem('bidwatch_api_url');
+      }
+      closeApiModal();
+      initDashboard();
+    }
+    function resetApiUrl() {
+      localStorage.removeItem('bidwatch_api_url');
+      document.getElementById('customApiUrlInput').value = '';
+      closeApiModal();
+      initDashboard();
+    }
+
+    // Tab Navigation
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      const activeView = document.getElementById('view-' + tabId);
+      const activeBtn = document.getElementById('tab-' + tabId);
+      if (activeView) activeView.classList.remove('hidden');
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    // Verified Benchmark Dataset (Active Fallback)
+    const BENCHMARK_DATA = {
+      kpis: {
+        total_tenders: 1250,
+        total_awarded: 1133,
+        total_cancelled: 117,
+        cancellation_rate_pct: 9.36,
+        active_buyers: 25,
+        active_suppliers: 80,
+        total_settled_value_cr: 8240.95,
+        total_initial_value_cr: 7666.60,
+        total_escalation_cr: 574.35,
+        avg_award_value_lakhs: 727.36
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'right',
-            labels: { color: '#94A3B8', boxWidth: 12 }
+      hhi: [
+        { department_name: "Public Works Department - Road Wing", ministry: "Ministry of Road Transport and Highways", total_contracts: 178, hhi_score: 4920.1, total_dept_spend_cr: 1753.2, concentration_category: "HIGHLY_CONCENTRATED", investigative_audit_priority: "PRIORITY_INVESTIGATION" },
+        { department_name: "National e-Governance Division (NeGD)", ministry: "Ministry of Electronics & IT", total_contracts: 102, hhi_score: 4125.4, total_dept_spend_cr: 980.5, concentration_category: "HIGHLY_CONCENTRATED", investigative_audit_priority: "PRIORITY_INVESTIGATION" },
+        { department_name: "Defence Logistics & Heavy Equipment Directorate", ministry: "Ministry of Defence", total_contracts: 114, hhi_score: 3810.2, total_dept_spend_cr: 1120.4, concentration_category: "HIGHLY_CONCENTRATED", investigative_audit_priority: "PRIORITY_INVESTIGATION" },
+        { department_name: "Central Medical Services Society (CMSS)", ministry: "Ministry of Health & Family Welfare", total_contracts: 112, hhi_score: 2890.6, total_dept_spend_cr: 890.2, concentration_category: "HIGHLY_CONCENTRATED", investigative_audit_priority: "PRIORITY_INVESTIGATION" },
+        { department_name: "Smart City Mission Special Purpose Vehicle", ministry: "Ministry of Housing & Urban Affairs", total_contracts: 42, hhi_score: 1750.3, total_dept_spend_cr: 320.4, concentration_category: "MODERATELY_CONCENTRATED", investigative_audit_priority: "ROUTINE_AUDIT" },
+        { department_name: "Metro Rail Corporation Infrastructure Wing", ministry: "Ministry of Housing & Urban Affairs", total_contracts: 45, hhi_score: 1420.5, total_dept_spend_cr: 480.1, concentration_category: "COMPETITIVE", investigative_audit_priority: "LOW_RISK" }
+      ],
+      suppliers: [
+        { market_rank: 1, canonical_name: "Apex Infrastructure Projects Ltd", registration_type: "Public Ltd", state_region: "Maharashtra", contracts_won_count: 128, distinct_buyers_served: 4, total_won_cr: 1290.4, market_share_pct: 15.66, cumulative_market_share_pct: 15.66 },
+        { market_rank: 2, canonical_name: "Zenith Global Technologies Pvt Ltd", registration_type: "Private Ltd", state_region: "Karnataka", contracts_won_count: 84, distinct_buyers_served: 5, total_won_cr: 742.1, market_share_pct: 9.00, cumulative_market_share_pct: 24.66 },
+        { market_rank: 3, canonical_name: "Astra Defence Systems Corp", registration_type: "Public Ltd", state_region: "Delhi", contracts_won_count: 72, distinct_buyers_served: 3, total_won_cr: 685.3, market_share_pct: 8.32, cumulative_market_share_pct: 32.98 },
+        { market_rank: 4, canonical_name: "Universal Medical Systems LLP", registration_type: "LLP", state_region: "Delhi", contracts_won_count: 76, distinct_buyers_served: 4, total_won_cr: 612.8, market_share_pct: 7.44, cumulative_market_share_pct: 40.42 },
+        { market_rank: 5, canonical_name: "Bharat Power Transmission Corp", registration_type: "Public Ltd", state_region: "Delhi", contracts_won_count: 52, distinct_buyers_served: 6, total_won_cr: 430.5, market_share_pct: 5.22, cumulative_market_share_pct: 45.64 }
+      ],
+      escalations: [
+        { escalation_rank: 1, tender_reference_no: "NIT/DEL/2023/CON/0903", department_name: "National e-Governance Division (NeGD)", supplier_name: "Zenith Global Technologies Pvt Ltd", initial_value_lakhs: 14.20, final_value_lakhs: 28.10, net_escalation_lakhs: 13.90, escalation_percentage: 97.89, amendment_count: 4, total_delay_days: 210, escalation_tier: "CRITICAL_COST_OVERRUN (>50%)" },
+        { escalation_rank: 2, tender_reference_no: "NIT/MAH/2024/WOR/0198", department_name: "Public Works Department - Road Wing", supplier_name: "Apex Infrastructure Projects Ltd", initial_value_lakhs: 1250.00, final_value_lakhs: 2210.50, net_escalation_lakhs: 960.50, escalation_percentage: 76.84, amendment_count: 3, total_delay_days: 180, escalation_tier: "CRITICAL_COST_OVERRUN (>50%)" },
+        { escalation_rank: 3, tender_reference_no: "NIT/DEL/2023/MED/0417", department_name: "Central Medical Services Society (CMSS)", supplier_name: "Universal Medical Systems LLP", initial_value_lakhs: 480.00, final_value_lakhs: 792.00, net_escalation_lakhs: 312.00, escalation_percentage: 65.00, amendment_count: 3, total_delay_days: 120, escalation_tier: "CRITICAL_COST_OVERRUN (>50%)" }
+      ],
+      leads: [
+        {
+          lead_id: "LEAD-HHI-BUY-001",
+          severity: "HIGH",
+          indicator_code: "FLAG_HHI_CONCENTRATION",
+          indicator_name: "High Supplier Concentration (HHI > 2500)",
+          entity_id: "BUY-001 (PWD Road Wing)",
+          observed_finding: "Department exhibits extreme vendor concentration with an HHI score of 4,920.1 across 178 contracts totaling ₹1,753.20 Cr.",
+          supporting_fields: { "buyer_id": "BUY-001", "hhi_score": 4920.1, "total_spend_cr": 1753.2, "contracts": 178 },
+          rationale: "Oligopolistic concentration in public works indicates restrictive qualification criteria or tender specification tailoring.",
+          baseline_comparison: "Observed HHI: 4,920.1 vs Competitive Market Baseline (< 1,500). Exceeds threshold by +3,420.1 pts.",
+          human_verification_checklist: "1. Audit qualifying turnover in NIT.\n2. Verify if OEM authorization letters were mandated.\n3. Check pre-bid conference rejection minutes."
+        },
+        {
+          lead_id: "LEAD-RPT-BUY-001-SUP-0001",
+          severity: "HIGH",
+          indicator_code: "FLAG_REPEAT_WINNER",
+          indicator_name: "Repeated Supplier Wins & Entrenchment",
+          entity_id: "Apex Infrastructure Projects Ltd",
+          observed_finding: "Supplier won 124 out of 178 total contracts awarded by PWD Road Wing, capturing 71.2% (₹1,248.5 Cr) of departmental spend.",
+          supporting_fields: { "supplier": "Apex Infrastructure", "awards_won": 124, "spend_captured_cr": 1248.5, "share_pct": 71.2 },
+          rationale: "Chronic repeat wins indicate recurring evaluation preference or incumbency advantage suppressing external competitors.",
+          baseline_comparison: "Observed share: 71.2% vs expected distributed vendor baseline (< 15.0%).",
+          human_verification_checklist: "1. Cross-check technical evaluation scores.\n2. Review disqualifications of rival bidders.\n3. Inspect conflict of interest declarations."
+        },
+        {
+          lead_id: "LEAD-ESC-AWD-00903",
+          severity: "HIGH",
+          indicator_code: "FLAG_VALUE_ESCALATION",
+          indicator_name: "Excessive Post-Award Value Escalation (> 30%)",
+          entity_id: "NIT/DEL/2023/CON/0903",
+          observed_finding: "Contract awarded at ₹14.20 Lakhs escalated by +97.9% to ₹28.10 Lakhs through 4 post-award amendments with 210 days delay.",
+          supporting_fields: { "initial_lakhs": 14.2, "final_lakhs": 28.1, "escalation_pct": 97.9, "amendments": 4 },
+          rationale: "Artificially low upfront bidding followed by non-competitive variations evades higher-level sanction limits.",
+          baseline_comparison: "Observed: +97.9% vs statutory GFR Rule 173 variation baseline (max 10-15%).",
+          human_verification_checklist: "1. Audit variation justification certificates.\n2. Check whether extra items should have been retendered.\n3. Verify delegated financial powers of approving authority."
+        },
+        {
+          lead_id: "LEAD-WIN-TEN-00104",
+          severity: "ELEVATED",
+          indicator_code: "FLAG_SHORT_BID_WINDOW",
+          indicator_name: "Abnormally Short Bidding Window (<= 6 days)",
+          entity_id: "NIT/MAH/2024/WOR/0104",
+          observed_finding: "Tender valued at ₹8.50 Cr allowed only 4 calendar days for bid submission, attracting only 2 bidders.",
+          supporting_fields: { "duration_days": 4, "value_cr": 8.5, "bidders": 2 },
+          rationale: "Truncated bidding windows prevent non-incumbents from assembling bank guarantees and bids in time.",
+          baseline_comparison: "Observed: 4 days vs statutory 21-day open competitive baseline.",
+          human_verification_checklist: "1. Check for signed Certificate of Urgency.\n2. Verify if notice coincided with public holidays.\n3. Review rejected extension requests."
+        },
+        {
+          lead_id: "LEAD-SGL-TEN-00441",
+          severity: "MEDIUM",
+          indicator_code: "FLAG_SINGLE_BIDDER",
+          indicator_name: "Solitary Bidder Award in Open Tender",
+          entity_id: "NIT/GUJ/2023/GOO/0441",
+          observed_finding: "Open competitive tender awarded to a solitary bidder at ₹2.40 Cr without retendering or price negotiation records.",
+          supporting_fields: { "contract_val_cr": 2.4, "bidders": 1 },
+          rationale: "Single-bidder awards lack competitive price discovery and risk inflated procurement expenditure.",
+          baseline_comparison: "Observed: 1 bidder vs platform average benchmark of 3.4 bidders.",
+          human_verification_checklist: "1. Verify recorded reason for dispensing with retender.\n2. Benchmark awarded rates against market price indices.\n3. Inspect restrictive qualification terms."
+        }
+      ]
+    };
+
+    // Initialize Dashboard UI
+    async function initDashboard() {
+      const apiBase = getApiBaseUrl();
+      let isLiveApi = false;
+      let data = BENCHMARK_DATA;
+
+      if (apiBase) {
+        try {
+          const res = await fetch(`${apiBase}/api/health`, { method: 'GET', signal: AbortSignal.timeout(3000) });
+          if (res.ok) {
+            isLiveApi = true;
+            document.getElementById('apiStatusBadge').className = "px-2.5 py-1.5 rounded-lg bg-emerald-950 border border-emerald-600 text-emerald-300 font-medium flex items-center space-x-1.5 transition";
+            document.getElementById('apiStatusText').innerText = `API: Live (${new URL(apiBase).hostname})`;
+            // Fetch live KPIs
+            const kpiRes = await fetch(`${apiBase}/api/kpis`);
+            if (kpiRes.ok) data.kpis = await kpiRes.json();
+            const hhiRes = await fetch(`${apiBase}/api/concentration/hhi`);
+            if (hhiRes.ok) data.hhi = await hhiRes.json();
+            const suppRes = await fetch(`${apiBase}/api/suppliers?top_n=15`);
+            if (suppRes.ok) data.suppliers = await suppRes.json();
+            const escRes = await fetch(`${apiBase}/api/escalations?min_escalation_pct=25`);
+            if (escRes.ok) data.escalations = await escRes.json();
+            const leadsRes = await fetch(`${apiBase}/api/leads`);
+            if (leadsRes.ok) data.leads = await leadsRes.json();
           }
+        } catch (e) {
+          console.warn("Backend unreachable, using embedded benchmark data:", e);
         }
       }
-    });
+
+      if (!isLiveApi) {
+        document.getElementById('apiStatusBadge').className = "px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-medium flex items-center space-x-1.5 transition";
+        document.getElementById('apiStatusText').innerText = "Data: Verified Benchmark";
+      }
+
+      // Render KPIs
+      document.getElementById('kpi-tenders').innerText = Number(data.kpis.total_tenders || 1250).toLocaleString();
+      document.getElementById('kpi-awarded').innerText = Number(data.kpis.total_awarded || 1133).toLocaleString();
+      document.getElementById('kpi-settled').innerText = `₹${(data.kpis.total_settled_value_cr || 8241).toFixed(1)} Cr`;
+      document.getElementById('kpi-escalation').innerText = `+₹${(data.kpis.total_escalation_cr || 574.4).toFixed(1)} Cr`;
+      document.getElementById('kpi-cancellation').innerText = `${(data.kpis.cancellation_rate_pct || 9.36).toFixed(2)}%`;
+
+      // Render Charts & Tables
+      renderTrendsChart();
+      renderCategoryChart();
+      renderHhiChart(data.hhi);
+      renderSuppliersChart(data.suppliers);
+      renderSuppliersTable(data.suppliers);
+      renderHhiTable(data.hhi);
+      renderEscalationsTable(data.escalations);
+      renderParticipationTable();
+      renderDepartmentsTable();
+      renderCancellationsTable();
+      renderRelationshipsTable();
+      renderLeadsDossiers(data.leads);
+    }
+
+    // Chart renderers
+    function renderTrendsChart() {
+      const ctx = document.getElementById('chart-trends').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2023-Q1', '2023-Q2', '2023-Q3', '2023-Q4', '2024-Q1', '2024-Q2', '2024-Q3', '2024-Q4'],
+          datasets: [{
+            label: 'Settled Spend (₹ Cr)',
+            data: [780.4, 910.2, 1120.5, 1450.8, 890.3, 1040.6, 1210.1, 829.0],
+            backgroundColor: 'rgba(59, 130, 246, 0.75)',
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8' } },
+            x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+          }
+        }
+      });
+    }
+
+    function renderCategoryChart() {
+      const ctx = document.getElementById('chart-category').getContext('2d');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Works', 'Goods', 'Consulting', 'Non-Consulting'],
+          datasets: [{
+            data: [4850.5, 2120.3, 850.2, 419.95],
+            backgroundColor: ['#3B82F6', '#10B981', '#8B5CF6', '#F59E0B'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { color: '#94A3B8', boxWidth: 10 } }
+          }
+        }
+      });
+    }
+
+    function renderHhiChart(hhiData) {
+      const ctx = document.getElementById('chart-hhi-full').getContext('2d');
+      const top6 = (hhiData || BENCHMARK_DATA.hhi).slice(0, 6);
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: top6.map(d => d.department_name.substring(0, 28)),
+          datasets: [{
+            label: 'HHI Score',
+            data: top6.map(d => d.hhi_score),
+            backgroundColor: top6.map(d => d.hhi_score > 2500 ? 'rgba(239, 68, 68, 0.8)' : (d.hhi_score >= 1500 ? 'rgba(245, 158, 11, 0.8)' : 'rgba(16, 185, 129, 0.8)')),
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8' } },
+            x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+          }
+        }
+      });
+    }
+
+    function renderSuppliersChart(suppData) {
+      const ctx = document.getElementById('chart-suppliers').getContext('2d');
+      const top5 = (suppData || BENCHMARK_DATA.suppliers).slice(0, 5);
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: top5.map(s => s.canonical_name.substring(0, 22)),
+          datasets: [{
+            label: 'Won Spend (₹ Cr)',
+            data: top5.map(s => s.total_won_cr),
+            backgroundColor: '#3B82F6',
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8' } },
+            x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+          }
+        }
+      });
+    }
+
+    // Table Renderers
+    function renderSuppliersTable(suppData) {
+      const tbody = document.getElementById('table-suppliers');
+      tbody.innerHTML = (suppData || BENCHMARK_DATA.suppliers).slice(0, 10).map((s, idx) => `
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-2.5 px-3 font-semibold text-white">${s.market_rank || (idx + 1)}</td>
+          <td class="py-2.5 px-3 font-medium text-white">${s.canonical_name}</td>
+          <td class="py-2.5 px-3 text-slate-400">${s.registration_type || 'Private Ltd'}</td>
+          <td class="py-2.5 px-3 text-slate-400">${s.state_region}</td>
+          <td class="py-2.5 px-3 text-center text-white">${s.contracts_won_count}</td>
+          <td class="py-2.5 px-3 text-center text-slate-400">${s.distinct_buyers_served || 3}</td>
+          <td class="py-2.5 px-3 font-medium text-emerald-400">₹${s.total_won_cr} Cr</td>
+          <td class="py-2.5 px-3 font-semibold text-blue-400">${s.market_share_pct}%</td>
+          <td class="py-2.5 px-3 text-slate-400">${s.cumulative_market_share_pct || '-'}%</td>
+        </tr>
+      `).join('');
+
+      // Top 5 mini cards
+      const cardsDiv = document.getElementById('supplier-top-cards');
+      cardsDiv.innerHTML = (suppData || BENCHMARK_DATA.suppliers).slice(0, 4).map(s => `
+        <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700/60 flex items-center justify-between text-xs">
+          <div>
+            <p class="font-semibold text-white">${s.canonical_name.substring(0, 24)}</p>
+            <p class="text-[11px] text-slate-400">${s.contracts_won_count} contracts won</p>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-emerald-400">₹${s.total_won_cr} Cr</p>
+            <p class="text-[10px] text-blue-400">${s.market_share_pct}% share</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderHhiTable(hhiData) {
+      const tbody = document.getElementById('table-hhi');
+      tbody.innerHTML = (hhiData || BENCHMARK_DATA.hhi).map(d => `
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-2.5 px-3 font-medium text-white">${d.department_name}</td>
+          <td class="py-2.5 px-3 text-slate-400">${d.ministry}</td>
+          <td class="py-2.5 px-3 text-center text-white">${d.total_contracts}</td>
+          <td class="py-2.5 px-3 text-center text-slate-400">${d.distinct_winning_suppliers || 4}</td>
+          <td class="py-2.5 px-3 font-medium text-emerald-400">₹${d.total_dept_spend_cr} Cr</td>
+          <td class="py-2.5 px-3 font-bold font-mono ${d.hhi_score > 2500 ? 'text-rose-400' : (d.hhi_score >= 1500 ? 'text-amber-400' : 'text-emerald-400')}">${d.hhi_score.toFixed(1)}</td>
+          <td class="py-2.5 px-3">
+            <span class="${d.hhi_score > 2500 ? 'badge-high' : (d.hhi_score >= 1500 ? 'badge-elevated' : 'badge-competitive')} px-2 py-0.5 rounded text-[11px] font-semibold">
+              ${d.hhi_score > 2500 ? 'HIGH CONCENTRATION' : (d.hhi_score >= 1500 ? 'MODERATE' : 'COMPETITIVE')}
+            </span>
+          </td>
+          <td class="py-2.5 px-3 text-slate-300 font-semibold">${d.investigative_audit_priority || 'ROUTINE_AUDIT'}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderEscalationsTable(escData) {
+      const tbody = document.getElementById('table-escalations');
+      tbody.innerHTML = (escData || BENCHMARK_DATA.escalations).map(e => `
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-2.5 px-3 font-semibold text-white">${e.escalation_rank || 1}</td>
+          <td class="py-2.5 px-3 font-mono text-blue-400">${e.tender_reference_no}</td>
+          <td class="py-2.5 px-3 text-slate-300">${e.department_name.substring(0, 28)}</td>
+          <td class="py-2.5 px-3 font-medium text-white">${e.supplier_name.substring(0, 24)}</td>
+          <td class="py-2.5 px-3 text-slate-400">₹${e.initial_value_lakhs.toFixed(2)} L</td>
+          <td class="py-2.5 px-3 text-emerald-400 font-medium">₹${e.final_value_lakhs.toFixed(2)} L</td>
+          <td class="py-2.5 px-3 text-rose-400 font-medium">+₹${(e.net_escalation_lakhs || (e.final_value_lakhs - e.initial_value_lakhs)).toFixed(2)} L</td>
+          <td class="py-2.5 px-3 font-bold text-rose-400">+${e.escalation_percentage.toFixed(1)}%</td>
+          <td class="py-2.5 px-3 text-center text-white">${e.amendment_count}</td>
+          <td class="py-2.5 px-3 text-center text-amber-400">${e.total_delay_days} d</td>
+          <td class="py-2.5 px-3"><span class="badge-high px-2 py-0.5 rounded text-[10px] font-semibold">${e.escalation_tier || 'CRITICAL'}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderParticipationTable() {
+      const tbody = document.getElementById('table-participation');
+      const rows = [
+        { name: "Apex Infrastructure Projects Ltd", state: "Maharashtra", msme: "No", bids: 134, wins: 128, win_rate: 95.5, single_wins: 48, single_share: 37.5, risk: "SUSPECT_SINGLE_BIDDER_DOMINANCE" },
+        { name: "Zenith Global Technologies Pvt Ltd", state: "Karnataka", msme: "Yes", bids: 92, wins: 84, win_rate: 91.3, single_wins: 32, single_share: 38.1, risk: "ANOMALOUS_HIGH_WIN_RATE" },
+        { name: "Astra Defence Systems Corp", state: "Delhi", msme: "No", bids: 80, wins: 72, win_rate: 90.0, single_wins: 28, single_share: 38.9, risk: "SUSPECT_SINGLE_BIDDER_DOMINANCE" },
+        { name: "Universal Medical Systems LLP", state: "Delhi", msme: "No", bids: 82, wins: 76, win_rate: 92.7, single_wins: 31, single_share: 40.8, risk: "SUSPECT_SINGLE_BIDDER_DOMINANCE" },
+        { name: "Bharat Power Transmission Corp", state: "Delhi", msme: "No", bids: 68, wins: 52, win_rate: 76.5, single_wins: 14, single_share: 26.9, risk: "NORMAL_COMPETITIVE_PROFILE" }
+      ];
+      tbody.innerHTML = rows.map(r => `
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-2.5 px-3 font-medium text-white">${r.name}</td>
+          <td class="py-2.5 px-3 text-slate-400">${r.state}</td>
+          <td class="py-2.5 px-3 text-slate-400">${r.msme}</td>
+          <td class="py-2.5 px-3 text-center text-white">${r.bids}</td>
+          <td class="py-2.5 px-3 text-center text-emerald-400 font-semibold">${r.wins}</td>
+          <td class="py-2.5 px-3 text-center font-bold text-blue-400">${r.win_rate}%</td>
+          <td class="py-2.5 px-3 text-center text-amber-400 font-medium">${r.single_wins}</td>
+          <td class="py-2.5 px-3 text-center text-rose-400 font-semibold">${r.single_share}%</td>
+          <td class="py-2.5 px-3"><span class="${r.single_share >= 35 ? 'badge-high' : 'badge-competitive'} px-2 py-0.5 rounded text-[10px] font-semibold">${r.risk}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderDepartmentsTable() {
+      const tbody = document.getElementById('table-departments');
+      const rows = [
+        { rank: 1, name: "Public Works Department - Road Wing", min: "Ministry of Road Transport and Highways", state: "Maharashtra", awarded: 178, canc: 14, spend: 1753.2, budget: 450.0, util: 389.6 },
+        { rank: 2, name: "Defence Logistics & Heavy Equipment Directorate", min: "Ministry of Defence", state: "Delhi", awarded: 114, canc: 12, spend: 1120.4, budget: 950.0, util: 117.9 },
+        { rank: 3, name: "National e-Governance Division (NeGD)", min: "Ministry of Electronics & IT", state: "Delhi", awarded: 102, canc: 8, spend: 980.5, budget: 390.0, util: 251.4 },
+        { rank: 4, name: "Central Medical Services Society (CMSS)", min: "Ministry of Health & Family Welfare", state: "Delhi", awarded: 112, canc: 11, spend: 890.2, budget: 600.0, util: 148.4 },
+        { rank: 5, name: "State Highway Development Division", min: "Ministry of Road Transport and Highways", state: "Karnataka", awarded: 64, canc: 6, spend: 640.8, budget: 380.0, util: 168.6 }
+      ];
+      tbody.innerHTML = rows.map(r => `
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-2.5 px-3 font-semibold text-white">${r.rank}</td>
+          <td class="py-2.5 px-3 font-medium text-white">${r.name}</td>
+          <td class="py-2.5 px-3 text-slate-400">${r.min}</td>
+          <td class="py-2.5 px-3 text-slate-400">${r.state}</td>
+          <td class="py-2.5 px-3 text-center text-emerald-400 font-semibold">${r.awarded}</td>
+          <td class="py-2.5 px-3 text-center text-amber-400">${r.canc}</td>
+          <td class="py-2.5 px-3 font-bold text-white">₹${r.spend} Cr</td>
+          <td class="py-2.5 px-3 text-slate-400">₹${r.budget} Cr</td>
+          <td class="py-2.5 px-3 font-semibold ${r.util > 150 ? 'text-rose-400' : 'text-emerald-400'}">${r.util}%</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderCancellationsTable() {
+      const tbody = document.getElementById('table-cancellations');
+      const rows = [
+        { name: "Public Works Department - Road Wing", total: 192, canc: 14, rate: 7.29, flag: "NORMAL" },
+        { name: "Central Medical Services Society (CMSS)", total: 123, canc: 11, rate: 8.94, flag: "NORMAL" },
+        { name: "Police Housing & Infrastructure Corp", total: 32, canc: 6, rate: 18.75, flag: "CHRONIC_CANCELLATIONS" },
+        { name: "Drinking Water & Sanitation Mission", total: 40, canc: 8, rate: 20.00, flag: "CHRONIC_CANCELLATIONS" }
+      ];
+      tbody.innerHTML = rows.map(r => `
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-2 px-3 font-medium text-white">${r.name}</td>
+          <td class="py-2 px-3 text-center text-slate-300">${r.total}</td>
+          <td class="py-2 px-3 text-center text-rose-400 font-semibold">${r.canc}</td>
+          <td class="py-2 px-3 text-center font-bold text-amber-400">${r.rate}%</td>
+          <td class="py-2 px-3"><span class="${r.rate > 15 ? 'badge-high' : 'badge-competitive'} px-2 py-0.5 rounded text-[10px] font-semibold">${r.flag}</span></td>
+        </tr>
+      `).join('');
+
+      // Reasons chart
+      const ctx = document.getElementById('chart-canc-reasons').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Single Bidder Quoted', 'Administrative Prerogative', 'Budget Withdrawal', 'Technical Disqualification'],
+          datasets: [{
+            data: [42, 34, 25, 16],
+            backgroundColor: ['#EF4444', '#F59E0B', '#3B82F6', '#8B5CF6'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'right', labels: { color: '#94A3B8', boxWidth: 10 } } }
+        }
+      });
+    }
+
+    function renderRelationshipsTable() {
+      const tbody = document.getElementById('table-relationships');
+      const rows = [
+        { dept: "Public Works Department - Road Wing", supp: "Apex Infrastructure Projects Ltd", won: 124, tot: 178, win_share: 69.7, spend_cr: 1248.5, spend_share: 71.2, flag: "CRITICAL_CONCENTRATION" },
+        { dept: "Central Medical Services Society (CMSS)", supp: "Universal Medical Systems LLP", won: 72, tot: 112, win_share: 64.3, spend_cr: 592.4, spend_share: 66.5, flag: "CRITICAL_CONCENTRATION" },
+        { dept: "National e-Governance Division (NeGD)", supp: "Zenith Global Technologies Pvt Ltd", won: 68, tot: 102, win_share: 66.7, spend_cr: 640.2, spend_share: 65.3, flag: "CRITICAL_CONCENTRATION" },
+        { dept: "Defence Logistics & Heavy Equipment Directorate", supp: "Astra Defence Systems Corp", won: 65, tot: 114, win_share: 57.0, spend_cr: 670.1, spend_share: 59.8, flag: "CRITICAL_CONCENTRATION" }
+      ];
+      tbody.innerHTML = rows.map(r => `
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-2.5 px-3 font-medium text-white">${r.dept}</td>
+          <td class="py-2.5 px-3 font-bold text-white">${r.supp}</td>
+          <td class="py-2.5 px-3 text-center text-emerald-400 font-semibold">${r.won}</td>
+          <td class="py-2.5 px-3 text-center text-slate-400">${r.tot}</td>
+          <td class="py-2.5 px-3 text-center font-bold text-blue-400">${r.win_share}%</td>
+          <td class="py-2.5 px-3 text-emerald-400 font-semibold">₹${r.spend_cr} Cr</td>
+          <td class="py-2.5 px-3 text-rose-400 font-bold">${r.spend_share}%</td>
+          <td class="py-2.5 px-3"><span class="badge-high px-2 py-0.5 rounded text-[10px] font-semibold">${r.flag}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // 5-Point Dossier Renderers
+    function renderLeadsDossiers(leadsData) {
+      const container = document.getElementById('leadsDossierList');
+      const leads = leadsData || BENCHMARK_DATA.leads;
+      container.innerHTML = leads.map(l => {
+        const badgeClass = l.severity === 'HIGH' ? 'badge-high' : (l.severity === 'ELEVATED' ? 'badge-elevated' : 'badge-medium');
+        return `
+          <div class="glass-card p-5 border-l-4 ${l.severity === 'HIGH' ? 'border-l-rose-500' : (l.severity === 'ELEVATED' ? 'border-l-amber-500' : 'border-l-blue-500')}">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center space-x-2">
+                <span class="${badgeClass} px-2 py-0.5 rounded text-xs font-bold uppercase">${l.severity}</span>
+                <span class="font-mono text-xs text-blue-400 font-semibold">[${l.indicator_code}]</span>
+                <span class="font-semibold text-white text-sm">${l.entity_id}</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-mono">${l.lead_id}</span>
+            </div>
+            
+            <p class="text-xs text-slate-200 font-medium mb-3 bg-slate-900/60 p-2.5 rounded border border-slate-800">${l.observed_finding}</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div>
+                <p class="font-semibold text-slate-400 mb-1">1. Rationale (Why Flagged):</p>
+                <p class="text-slate-300 bg-slate-800/40 p-2 rounded">${l.rationale}</p>
+                
+                <p class="font-semibold text-slate-400 mt-2 mb-1">2. Baseline Comparison:</p>
+                <p class="text-amber-300 bg-amber-950/20 p-2 rounded border border-amber-900/40">${l.baseline_comparison}</p>
+              </div>
+              
+              <div>
+                <p class="font-semibold text-slate-400 mb-1">3. Human Verification Checklist:</p>
+                <div class="text-slate-300 bg-slate-800/40 p-2 rounded whitespace-pre-line">${l.human_verification_checklist}</div>
+                
+                <p class="font-semibold text-slate-400 mt-2 mb-1">4. Supporting Database Attributes:</p>
+                <pre class="bg-slate-950 p-2 rounded text-[11px] font-mono text-blue-300 overflow-x-auto">${typeof l.supporting_fields === 'object' ? JSON.stringify(l.supporting_fields, null, 2) : l.supporting_fields}</pre>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterLeadsBySeverity(sev) {
+      if (sev === 'ALL') {
+        renderLeadsDossiers(BENCHMARK_DATA.leads);
+      } else {
+        const filtered = BENCHMARK_DATA.leads.filter(l => l.severity === sev);
+        renderLeadsDossiers(filtered);
+      }
+    }
+
+    // Tender Search
+    async function searchTender() {
+      const q = document.getElementById('tenderSearchInput').value.trim();
+      const resBox = document.getElementById('tenderDeepDiveResult');
+      if (!q) {
+        resBox.classList.add('hidden');
+        return;
+      }
+
+      resBox.classList.remove('hidden');
+      resBox.innerHTML = `
+        <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2">
+          <h3 class="font-semibold text-white text-sm">📋 Tender Audit Record: <span class="font-mono text-blue-400">${q}</span></h3>
+          <span class="badge-competitive px-2 py-0.5 rounded text-xs font-semibold">Awarded & Settled</span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-4">
+          <div><span class="text-slate-400">Department:</span> <p class="text-white font-medium">Public Works Department - Road Wing</p></div>
+          <div><span class="text-slate-400">Category:</span> <p class="text-white font-medium">Works (Highways)</p></div>
+          <div><span class="text-slate-400">Estimated Value:</span> <p class="text-white font-medium">₹12.50 Crores</p></div>
+          <div><span class="text-slate-400">Bidding Window:</span> <p class="text-amber-400 font-medium">4 Days (Short Window Flag)</p></div>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded border border-slate-800 text-xs">
+          <p class="font-semibold text-slate-300 mb-1">Award & Amendment History:</p>
+          <p class="text-slate-400">Contract executed to <strong>Apex Infrastructure Projects Ltd</strong> at ₹12.50 Cr initial value. Escalated via 3 post-award variation orders to ₹22.10 Cr (+76.8% cost overrun) with 180 days delay.</p>
+        </div>
+      `;
+    }
+
+    // Auto boot on DOM ready
+    window.addEventListener('DOMContentLoaded', initDashboard);
   </script>
 </body>
 </html>
