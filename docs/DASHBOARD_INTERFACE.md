@@ -98,8 +98,9 @@ flowchart TD
 The repository includes native Vercel configuration (`vercel.json`) and a dedicated responsive web interface in `index.html` and `public/index.html`.
 
 - **Target Vercel Account:** [https://vercel.com/parvinder10s-projects](https://vercel.com/parvinder10s-projects)
+- **Live Production URL:** [https://bidwatch-red.vercel.app/](https://bidwatch-red.vercel.app/)
+- **Project Dashboard:** [https://vercel.com/parvinder10s-projects/bidwatch](https://vercel.com/parvinder10s-projects/bidwatch)
 - **1-Click Direct Import Link:** [Deploy to Vercel (parvinder10s-projects)](https://vercel.com/new/clone?repository-url=https://github.com/Parvinder10/bidwatch&project-name=bidwatch)
-- **Deployed Edge Portal:** `https://bidwatch.vercel.app` (or `https://bidwatch-parvinder10s-projects.vercel.app`)
 
 ### Step-by-Step Vercel Deployment:
 1. Open your Vercel Dashboard at [https://vercel.com/parvinder10s-projects](https://vercel.com/parvinder10s-projects).

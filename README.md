@@ -2,6 +2,7 @@
 ### Public Procurement Intelligence and Investigative Analytics Platform
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://bidwatch.streamlit.app/)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel)](https://bidwatch-red.vercel.app/)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Parvinder10/bidwatch)
 [![Python](https://img.shields.io/badge/Python-3.14-blue.svg)](https://www.python.org/)
 [![Database](https://img.shields.io/badge/Database-SQLite%20%7C%20PostgreSQL-003B57.svg)](https://sqlite.org/)
@@ -10,7 +11,7 @@
 [![License](https://img.shields.io/badge/License-CC--BY--4.0-green.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 > 🌐 **Live Streamlit Application:** [https://bidwatch.streamlit.app/](https://bidwatch.streamlit.app/)  
-> ⚡ **Live Vercel Edge Portal:** Deployable in 1-click via Vercel ([docs/DASHBOARD_INTERFACE.md](docs/DASHBOARD_INTERFACE.md))  
+> ⚡ **Live Vercel Production Portal:** [https://bidwatch-red.vercel.app/](https://bidwatch-red.vercel.app/)  
 > 📦 **GitHub Repository:** [https://github.com/Parvinder10/bidwatch](https://github.com/Parvinder10/bidwatch)
 
 ---
